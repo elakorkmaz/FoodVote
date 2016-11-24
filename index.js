@@ -17,6 +17,10 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/show', (req, res) => {
+  res.render('show');
+});
+
 sequelize.sync().then(() => {
   console.log('connected to database');
   app.listen(3000, () => {
