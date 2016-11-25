@@ -7,17 +7,6 @@ const express = require('express'),
 var app = express(),
     sequelize = new Sequelize('foodvote', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, { dialect: 'postgres' });
 
-var meal = sequelize.define('meal', {
-      title: Sequelize.STRING,
-      slug: Sequelize.STRING,
-      content: Sequelize.TEXT,
-      likes: Sequelize.INTEGER
-    }),
-    like = sequelize.define('like', {
-      number: Sequelize.INTEGER,
-      MealId: Sequelize.INTEGER
-  });
-
 app.use(express.static('public'));
 
 app.set('view engine', 'pug');
