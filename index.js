@@ -4,19 +4,10 @@ const express = require('express'),
       pug = require('pug'),
       Sequelize = require('sequelize');
 
+var db = require('./models');
+
 var app = express(),
     sequelize = new Sequelize('foodvote', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, { dialect: 'postgres' });
-
-var meal = sequelize.define('meal', {
-      title: Sequelize.STRING,
-      slug: Sequelize.STRING,
-      content: Sequelize.TEXT,
-      likes: Sequelize.INTEGER
-    }),
-    like = sequelize.define('like', {
-      number: Sequelize.INTEGER,
-      MealId: Sequelize.INTEGER
-  });
 
 app.use(express.static('public'));
 
@@ -28,8 +19,16 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/show', (req, res) => {
-  res.render('show');
+app.get('/:slug', (req, res) => {
+  db.Meal.findOne({
+    where: {
+      slug: req.params.slug
+    }
+  }).then((Meal) => {
+    res.render('/show', { meal: meal });
+  }).catch((error) => {
+    res.status(404).end();
+  });
 });
 
 sequelize.sync().then(() => {
