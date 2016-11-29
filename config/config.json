@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "ela",
+    "username": "marcocampos",
     "password": null,
-    "database": "database_development",
+    "database": "foodvote",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
