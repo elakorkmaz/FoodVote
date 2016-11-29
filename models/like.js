@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var likes = sequelize.define('likes', {
+  var Like = sequelize.define('like', {
     number: DataTypes.INTEGER,
     MealId: DataTypes.INTEGER
   }, {
@@ -10,5 +10,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return likes;
+  return like;
 };
