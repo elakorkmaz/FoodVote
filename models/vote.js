@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var vote = sequelize.define('vote', {
+  var Vote = sequelize.define('Vote', {
     number: DataTypes.INTEGER
   }, {
     classMethods: {
@@ -9,5 +9,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return vote;
+  return Vote;
 };

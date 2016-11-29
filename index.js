@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/:slug', (req, res) => {
+app.get('/show', (req, res) => {
   db.Menu.findOne({
     where: {
       slug: req.params.slug

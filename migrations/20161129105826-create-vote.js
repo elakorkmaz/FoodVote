@@ -18,6 +18,15 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      MenuId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Menus',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       }
     });
   },
