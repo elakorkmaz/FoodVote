@@ -32,12 +32,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:slug', (req, res) => {
-  db.Meal.findOne({
+  db.Menu.findOne({
     where: {
       slug: req.params.slug
     }
-  }).then((Meal) => {
-    res.render('/show', { meal: meal });
+  }).then((Menu) => {
+    res.render('/show', { menu: menu });
   }).catch((error) => {
     res.status(404).end();
   });
