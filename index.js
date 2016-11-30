@@ -2,14 +2,12 @@ const express = require('express'),
       displayRoutes = require('express-routemap'),
       morgan = require('morgan'),
       pug = require('pug'),
-      Sequelize = require('sequelize'),
       methodOverride = require('method-override'),
       bodyParser = require('body-parser');
 
 var db = require('./models');
 
-var app = express(),
-    sequelize = new Sequelize('foodvote', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, { dialect: 'postgres' });
+var app = express();
 
 app.set('view engine', 'pug');
 
@@ -28,7 +26,11 @@ app.use(methodOverride((req, res) => {
 );
 
 app.get('/', (req, res) => {
-  res.render('index');
+  db.Menu.findAll().then((menus) => {
+    res.render('index', { menus: menus });
+  }).catch((error) => {
+    res.status(404).end();
+  });
 });
 
 app.get('/menus/:slug', (req, res) => {
@@ -43,7 +45,7 @@ app.get('/menus/:slug', (req, res) => {
   });
 });
 
-sequelize.sync().then(() => {
+db.sequelize.sync().then(() => {
   console.log('connected to database');
   app.listen(3000, () => {
     console.log('server is now running on port 3000');
