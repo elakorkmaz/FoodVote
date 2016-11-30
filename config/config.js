@@ -1,23 +1,23 @@
-{
+module.exports = {
   "development": {
-    "username": "ela",
+    "username": process.env.DB_USERNAME,
     "password": null,
-    "database": "database_development",
+    "database": "foodvote",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "ela",
     "password": null,
-    "database": "database_test",
+    "database": "foodvote",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "ela",
     "password": null,
-    "database": "database_production",
+    "database": "foodvote",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
-}
+};
