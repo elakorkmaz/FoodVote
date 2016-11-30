@@ -1,15 +1,17 @@
 const express = require('express'),
       displayRoutes = require('express-routemap'),
       morgan = require('morgan'),
-      pug = require('pug'),
-      Sequelize = require('sequelize');
+      bodyParser = require('body-parser'),
+
+      pug = require('pug');
 
 var db = require('./models');
 
-var app = express(),
-    sequelize = new Sequelize('foodvote', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, { dialect: 'postgres' });
+var app = express();
 
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 app.set('view engine', 'pug');
 
@@ -19,8 +21,22 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/register', (req, res) => {
+  res.render('users/new');
+});
+
+app.post('/users', (req,res) => {
+  console.log(req.body)
+  db.User.create(req.body).then((user) =>{
+    console.log(req.body)
+  res.redirect('/');
+}).catch(() => {
+  res.redirect('/register');
+  });
+});
+
 app.get('/:slug', (req, res) => {
-  db.Meal.findOne({
+  db.meal.findOne({
     where: {
       slug: req.params.slug
     }
@@ -31,7 +47,7 @@ app.get('/:slug', (req, res) => {
   });
 });
 
-sequelize.sync().then(() => {
+db.sequelize.sync().then(() => {
   console.log('connected to database');
   app.listen(3000, () => {
     console.log('server is now running on port 3000');
