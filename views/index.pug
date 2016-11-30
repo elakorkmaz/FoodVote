@@ -14,10 +14,13 @@ block content
            li.active(data-target='#carousel-example-generic', data-slide-to='0')
            li(data-target='#carousel-example-generic', data-slide-to='1')
            li(data-target='#carousel-example-generic', data-slide-to='2')
+           li(data-target='#carousel-example-generic', data-slide-to='3')
+           li(data-target='#carousel-example-generic', data-slide-to='4')
+           li(data-target='#carousel-example-generic', data-slide-to='5')
          .carousel-inner(role='listbox')
            each menu in menus
              .carousel-item.active
-               img(src= menu.image + '.jpg')
+               img(src= menu.image + '.jpg' width="600px" height="300px")
                .carousel-caption
                  .row
                    .col-lg-6
