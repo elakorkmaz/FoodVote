@@ -2,17 +2,12 @@ const express = require('express'),
       displayRoutes = require('express-routemap'),
       morgan = require('morgan'),
       pug = require('pug'),
-      Sequelize = require('sequelize'),
-      fs = require('fs'),
-      bodyParser = require('body-parser'),
-      methodOverride = require('method-override');
+      methodOverride = require('method-override'),
+      bodyParser = require('body-parser');
 
 var db = require('./models');
 
-var app = express(),
-    sequelize = new Sequelize('foodvote', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, { dialect: 'postgres' });
-
-var likeStore = JSON.parse(fs.readFileSync('likes.json'));
+var app = express();
 
 app.set('view engine', 'pug');
 
@@ -31,32 +26,26 @@ app.use(methodOverride((req, res) => {
 );
 
 app.get('/', (req, res) => {
-  res.render('index');
+  db.Menu.findAll().then((menus) => {
+    res.render('index', { menus: menus });
+  }).catch((error) => {
+    res.status(404).end();
+  });
 });
 
-app.get('/:slug', (req, res) => {
-  db.Meal.findOne({
+app.get('/menus/:slug', (req, res) => {
+  db.Menu.findOne({
     where: {
       slug: req.params.slug
     }
-  }).then((meal) => {
-    res.render('/show', { meal: meal });
+  }).then((menu) => {
+    res.render('menus/show', { menu: menu });
+  }).catch((error) => {
+    res.status(404).end();
   });
 });
 
-app.post('/like', (req, res) => {
-  likeStore.likeCount = likeStore.likeCount + 1;
-
-  res.json(likeStore);
-
-  fs.writeFile('likes.json', JSON.stringify({ likeCount: likeCount }), (error, data) => {
-    if (error) {
-      throw error;
-    }
-  });
-});
-
-sequelize.sync().then(() => {
+db.sequelize.sync().then(() => {
   console.log('connected to database');
   app.listen(3000, () => {
     console.log('server is now running on port 3000');
