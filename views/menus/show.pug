@@ -9,9 +9,10 @@ block content
         h2= menu.title
         hr
       .row
-        img(src="/img/heart.svg.png" width="200px" height="200px")
+        a(href= "/votes/" + votes.id)
+          img(src="/img/heart.svg.png" width="200px" height="200px")
       .row
-        p= ('This menu received ' + menu.votes + ' votes')
+        p= ('This menu received ' + Vote.count + ' votes')
 
     .col-md-6.offset-md-3
         p= menu.info

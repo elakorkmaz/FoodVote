@@ -45,6 +45,8 @@ app.get('/menus/:slug', (req, res) => {
   });
 });
 
+
+
 db.sequelize.sync().then(() => {
   console.log('connected to database');
   app.listen(3000, () => {
