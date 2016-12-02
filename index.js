@@ -1,8 +1,8 @@
 const express = require('express'),
       displayRoutes = require('express-routemap'),
       morgan = require('morgan'),
+      session = require ('express-session'),
       bodyParser = require('body-parser'),
-
       pug = require('pug');
 
 var db = require('./models');
@@ -17,18 +17,44 @@ app.set('view engine', 'pug');
 
 app.use(morgan('dev'));
 
+app.use(session({ secret: 'secret key'}));
+
 app.get('/', (req, res) => {
   res.render('index');
+  console.log(res.session);    /// hier we run the session log in
 });
 
 app.get('/register', (req, res) => {
   res.render('users/new');
 });
 
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+///
+app.post('/login',(req,res) => {
+  console.log(req.body);
+  db.User.findOne({
+    where: {
+      email: req.body.email
+    }
+  }).then((userInDb) => {
+    if(userInDB.password === req.body.password) {
+      req.session.user = userInDB;
+      res.redirect('/');
+    //login user
+  } else {
+    res.redirect('/login');
+}
+}).catch(() => {
+  res.redirect('/login');
+  });
+});
+///
 app.post('/users', (req,res) => {
-  console.log(req.body)
+  console.log(req.body);
   db.User.create(req.body).then((user) =>{
-    console.log(req.body)
+    console.log(req.body);
   res.redirect('/');
 }).catch(() => {
   res.redirect('/register');
