@@ -9,7 +9,7 @@ block content
         h2= menu.title
         hr
       .row
-        form(action="/menus/" + menu.slug + "/votes" method="POST")
+        form(action="/menus/" + menu.id + "/votes" method="POST")
           input(type="hidden" name="MenuId" value=menu.id)
           button(type="submit" class="btn btn-lg btn-success") Vote
       .row

@@ -27,10 +27,11 @@ app.use(methodOverride((req, res) => {
 
 app.post('/menus/:id/votes', (req, res) => {
   db.Vote.findById(req.params.id).then((vote) => {
+    var menu = req.body;
     vote.MenuId = menu.id;
 
     db.Vote.create(vote).then(() => {
-        res.redirect('/menus/' + menu.slug);
+        res.redirect('/menus/:slug', { menu: menu });
       });
     });
 });
@@ -57,12 +58,6 @@ app.get('/menus/:slug', (req, res) => {
 
 // db.Vote.count().then(function(c) {
 //   console.log("There are " + c + " votes!");
-// });
-
-// app.post('/menus', (req, res) => {
-//   db.Vote.create(req.body).then((vote) => {
-//     res.redirect('/');
-//     });
 // });
 
 db.sequelize.sync().then(() => {
