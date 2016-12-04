@@ -31,7 +31,7 @@ app.post('/menus/:id/votes', (req, res) => {
     vote.MenuId = menu.id;
 
     db.Vote.create(vote).then(() => {
-        res.redirect('/menus/:slug', { menu: menu });
+        res.redirect('/');
       });
     });
 });

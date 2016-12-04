@@ -27,7 +27,9 @@ block content
                      a(href='/menus/' + menu.slug)
                        button.btn.btn-info(type='button') More info
                    .col-lg-6
-                     button.btn.btn-info(type='button') Vote
+                     form(action="/menus/" + menu.id + "/votes" method="POST")
+                       input(type="hidden" name="MenuId" value=menu.id)
+                       button(type="submit" class="btn btn-info") Vote
            a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
              span.icon-prev(aria-hidden='true')
              span.sr-only Previous
