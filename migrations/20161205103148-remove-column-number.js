@@ -15,10 +15,20 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      MenuId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Menus',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       }
     });
   },
-  down: function(queryInterface, Sequelize) {
+  down: function (queryInterface, Sequelize) {
     return queryInterface.dropTable('Votes');
   }
 };

@@ -26,8 +26,8 @@ app.use(methodOverride((req, res) => {
 );
 
 app.post('/menus/:id/votes', (req, res) => {
-  db.Vote.findById(req.params.id).then((vote) => {
-    var menu = req.body;
+  db.Menu.findById(req.params.id).then((menu) => {
+    var vote = req.body;
     vote.MenuId = menu.id;
 
     db.Vote.create(vote).then(() => {
@@ -37,6 +37,7 @@ app.post('/menus/:id/votes', (req, res) => {
 });
 
 app.get('/', (req, res) => {
+  console.log(req.session);
   db.Menu.findAll().then((menus) => {
     res.render('index', { menus: menus });
   }).catch((error) => {
@@ -56,9 +57,6 @@ app.get('/menus/:slug', (req, res) => {
   });
 });
 
-// db.Vote.count().then(function(c) {
-//   console.log("There are " + c + " votes!");
-// });
 
 db.sequelize.sync().then(() => {
   console.log('connected to database');
