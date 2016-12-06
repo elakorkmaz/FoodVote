@@ -3,7 +3,8 @@ const express = require('express'),
       morgan = require('morgan'),
       pug = require('pug'),
       methodOverride = require('method-override'),
-      bodyParser = require('body-parser');
+      bodyParser = require('body-parser'),
+      sequelize = require('sequelize');
 
 var db = require('./models');
 
@@ -51,12 +52,14 @@ app.get('/menus/:slug', (req, res) => {
       slug: req.params.slug
     }
   }).then((menu) => {
-    res.render('menus/show', { menu: menu });
-  }).catch((error) => {
-    res.status(404).end();
+    db.Vote.findAndCountAll({
+    })
+    .then((result) => {
+      console.log(result.count);
+      res.render('menus/show', { menu: menu, result: result });
+    });
   });
 });
-
 
 db.sequelize.sync().then(() => {
   console.log('connected to database');
