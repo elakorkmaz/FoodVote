@@ -4,6 +4,7 @@ const express = require('express'),
       pug = require('pug'),
       methodOverride = require('method-override'),
       bodyParser = require('body-parser'),
+      session = require('express-session'),
       sequelize = require('sequelize');
 
 var db = require('./models');
@@ -27,14 +28,14 @@ app.use(methodOverride((req, res) => {
 );
 
 app.post('/menus/:id/votes', (req, res) => {
-  db.Menu.findById(req.params.id).then((menu) => {
-    var vote = req.body;
-    vote.MenuId = menu.id;
+    db.Menu.findById(req.params.id).then((menu) => {
+      var vote = req.body;
+      vote.MenuId = menu.id;
 
-    db.Vote.create(vote).then(() => {
-        res.redirect('/');
+      db.Vote.create(vote).then(() => {
+          res.redirect('/');
+        });
       });
-    });
 });
 
 app.get('/', (req, res) => {

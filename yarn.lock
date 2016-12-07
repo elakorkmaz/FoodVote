@@ -272,7 +272,7 @@ express-routemap@^1.0.2:
     cli-table "^0.3.1"
     express-list-endpoints "^2.0.3"
 
-express-session:
+express-session@^1.14.2:
   version "1.14.2"
   resolved "https://registry.yarnpkg.com/express-session/-/express-session-1.14.2.tgz#6bcf586ed6d1dc37b02570087756c9de7b80b275"
   dependencies:

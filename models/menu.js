@@ -6,8 +6,6 @@ module.exports = function(sequelize, DataTypes) {
     slug: DataTypes.STRING,
     image: DataTypes.STRING,
     info: DataTypes.TEXT,
-    votes: DataTypes.INTEGER,
-    
   }, {
   hooks: {
     beforeCreate: function(menu, options) {

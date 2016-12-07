@@ -20,9 +20,6 @@ module.exports = {
       info: {
         type: Sequelize.TEXT
       },
-      votes: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
