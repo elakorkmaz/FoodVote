@@ -1,19 +1,30 @@
 const express = require('express'),
       displayRoutes = require('express-routemap'),
       morgan = require('morgan'),
-      pug = require('pug'),
-      methodOverride = require('method-override'),
-      bodyParser = require('body-parser');
+      session = require ('express-session'),
+      bodyParser = require('body-parser'),
+      pug = require('pug');
+      methodOverride = require('method-override');
 
 var db = require('./models');
 
 var app = express();
+
+const adminRoutes = require('./routes/admin'),
+      authenticationRoutes = require('./routes/authentication');
+
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set('view engine', 'pug');
 
 app.use(express.static('public'));
 
 app.use(morgan('dev'));
+app.use(session({ secret: 'secret key'}));
+
+app.use('/', authenticationRoutes);
+app.use('/admin', adminRoutes);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -30,6 +41,16 @@ app.get('/', (req, res) => {
     res.render('index', { menus: menus });
   }).catch((error) => {
     res.status(404).end();
+  });
+});
+
+app.get('/:slug', (req, res) => {
+  db.meal.findOne({
+    where: {
+      slug: req.params.slug
+    }
+  }).then((Meal) => {
+    res.render('/menus/show', { meal: meal });
   });
 });
 

@@ -4,13 +4,20 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^1.0.0",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-routemap": "^1.0.2",
     "express-session": "^1.14.2",
     "method-override": "^2.3.7",
     "morgan": "^1.7.0",
+    "pg": "^6.1.0",
     "pug": "^2.0.0-beta6",
     "sequelize": "^3.27.0"
-  }
+  },
+  "repository": {
+    "url": "git@github.com:elakorkmaz/FoodVote.git",
+    "type": "git"
+  },
+  "author": "marco <marcoflaco@gmail.com>"
 }

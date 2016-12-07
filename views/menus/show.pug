@@ -1,17 +1,18 @@
-extends ../application.pug
+extends ../views/application.pug
 
 block content
-
-    .col-md-4.offset-md-3
-      img(src= menu.image + '.jpg' width="450px" height="300px")
-    .col-md-2
-      .row
-        h2= menu.title
-        hr
-      .row
-        img(src="/img/heart.svg.png" width="200px" height="200px")
-      .row
-        p= ('This menu received ' + menu.votes + ' votes')
-
-    .col-md-6.offset-md-3
-        p= menu.info
+  .container
+    .row
+      .col-md-4.offset-md-3
+        img(src="/img/1.jpg")
+      .col-md-2
+        .row
+          h2=meal.title
+          hr
+        .row
+          img(src="/img/heart.svg.png" width="200px" height="200px")
+        .row
+          p=meal.likes
+    .row
+      .col-md-6.offset-md-3
+        p=meal.content
