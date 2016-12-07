@@ -34,6 +34,9 @@ app.locals.assets = assets;
 
 app.post('/menus/:id/votes', (req, res) => {
   db.Menu.findById(req.params.id).then((menu) => {
+    var vote = req.body;
+    vote.MenuId = menu.id;
+
     db.Vote.create(req.body).then(() => {
         res.redirect('/');
       }).catch((error) => {
@@ -56,11 +59,11 @@ app.get('/menus/:slug', (req, res) => {
       slug: req.params.slug
     }
   }).then((menu) => {
-    return db.Vote.findAndCountAll();
-  }).then((result) => {
-    res.render('menus/show', { menu: menu, result: result });
-  }).catch((error) => {
-    throw error;
+    return db.Vote.findAndCountAll({
+    })
+    .then((result) => {
+      res.render('menus/show', { menu: menu, result: result });
+    });
   });
 });
 
