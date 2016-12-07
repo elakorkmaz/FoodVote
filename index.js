@@ -9,72 +9,22 @@ var db = require('./models');
 
 var app = express();
 
+const adminRoutes = require('./routes/admin'),
+      authenticationRoutes = require('./routes/authentication');
+
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
 app.set('view engine', 'pug');
-
 app.use(morgan('dev'));
-
 app.use(session({ secret: 'secret key'}));
 
+app.use('/', authenticationRoutes);
+app.use('/admin', adminRoutes);
+
 app.get('/', (req, res) => {
-  res.render('index');
   console.log(res.session);    /// hier we run the session log in
-});
-
-app.get('/register', (req, res) => {
-  res.render('users/new');
-});
-
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-///
-app.post('/login',(req,res) => {
-  console.log(req.body);
-  db.User.findOne({
-    where: {
-      email: req.body.email
-    }
-  }).then((userInDb) => {
-    if(userInDB.password === req.body.password) {
-      req.session.user = userInDB;
-      res.redirect('/');
-    //login user
-  } else {
-    res.redirect('/login');
-}
-}).catch(() => {
-  res.redirect('/login');
-  });
-});
-// WE GO TO THE ADMIN SESSION
-app.get('/admin/menuposts',(req,res) =>{
-  res.render('admin/index');
-});
-
-///we make hier a log out who send to the homepage
-app.get('/logout',(req,res) =>{
-  re.session.user = undefined;
-  res.redirect('/');
-
-});
-///
-app.post('/users', (req,res) => {
-  console.log(req.body);
-  db.User.create(req.body).then((user) =>{
-    console.log(req.body);
-  res.redirect('/');
-}).catch(() => {
-  res.redirect('/register');
-  });
-});
-
-// admin can add a new menu
-app.get('/admin/menus/new', (req, res) =>{
-  res.render('admin/new');
+  res.render('index');
 });
 
 app.get('/:slug', (req, res) => {
@@ -83,7 +33,7 @@ app.get('/:slug', (req, res) => {
       slug: req.params.slug
     }
   }).then((Meal) => {
-    res.render('/show', { meal: meal });
+    res.render('/menus/show', { meal: meal });
   }).catch((error) => {
     res.status(404).end();
   });
