@@ -14,37 +14,23 @@ block content
            li.active(data-target='#carousel-example-generic', data-slide-to='0')
            li(data-target='#carousel-example-generic', data-slide-to='1')
            li(data-target='#carousel-example-generic', data-slide-to='2')
+           li(data-target='#carousel-example-generic', data-slide-to='3')
+           li(data-target='#carousel-example-generic', data-slide-to='4')
+           li(data-target='#carousel-example-generic', data-slide-to='5')
          .carousel-inner(role='listbox')
-           .carousel-item.active
-             img(src='/img/1.jpg', alt='First slide')
-             .carousel-caption
-               .row
-                 .col-lg-6
-                   a(href='/show')
-                     button.btn.btn-info(type='button') More info
-                 .col-lg-6
-                   button.btn.btn-info(type='button') Like
-           .carousel-item
-             img(src='/img/2.jpg', alt='Second slide')
-             .carousel-caption
-               .row
-                 .col-lg-6
-                   a(href='/show')
-                     button.btn.btn-info(type='button') More info
-                 .col-lg-6
-                   button.btn.btn-info(type='button') Like
-           .carousel-item
-             img(src='/img/3.jpg', alt='Third slide')
-             .carousel-caption
-               .row
-                 .col-lg-6
-                   a(href='/show')
-                     button.btn.btn-info(type='button') More info
-                 .col-lg-6
-                   button.btn.btn-info(type='button') Like
-         a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
-           span.icon-prev(aria-hidden='true')
-           span.sr-only Previous
-         a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
-           span.icon-next(aria-hidden='true')
-           span.sr-only Next
+           each menu in menus
+             .carousel-item.active
+               img(src= menu.image + '.jpg' width="600px" height="300px")
+               .carousel-caption
+                 .row
+                   .col-lg-6
+                     a(href='/menus/' + menu.slug)
+                       button.btn.btn-info(type='button') More info
+                   .col-lg-6
+                     button.btn.btn-info(type='button') Vote
+           a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
+             span.icon-prev(aria-hidden='true')
+             span.sr-only Previous
+           a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
+             span.icon-next(aria-hidden='true')
+             span.sr-only Next
