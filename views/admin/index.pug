@@ -1,0 +1,25 @@
+extends ../application.pug
+
+block content
+
+  .card.card-block
+    .row
+      .col-xs-8
+        h2 Menu
+      .col-xs-2.text-xs-right
+        a.btn.btn-warning(href='/admin/posts/edit') Edit Post
+      .col-xs-2.text-xs-right
+        form(action='/admin/posts/', method='POST')
+          input(type='hidden', name='_method', value='DELETE')
+          button.btn.btn-danger(type='submit') Remove Post
+
+  .card.card-block
+    .row
+      .col-xs-8
+        h2 Menu
+      .col-xs-2.text-xs-right
+        a.btn.btn-warning(href='/admin/posts/edit') Edit Post
+      .col-xs-2.text-xs-right
+        form(action='/admin/posts/', method='POST')
+          input(type='hidden', name='_method', value='DELETE')
+          button.btn.btn-danger(type='submit') Remove Post

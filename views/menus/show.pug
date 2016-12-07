@@ -1,18 +1,19 @@
-extends ../application.pug
+extends ../views/application.pug
 
 block content
+  .container
+    .row
+      .col-md-4.offset-md-3
+        img(src= menu.image width="450" height="300")
+      .col-md-2
+        .row
+          h2= menu.title
+          hr
+        .row
+          form(action="/menus/" + menu.id + "/votes" method="POST")
+            button(type="submit" class="btn btn-lg btn-success") Vote
+        .row
+          p= ('This menu received ' + result.count + ' votes')
 
-    .col-md-4.offset-md-3
-      img(src= menu.image width="450" height="300")
-    .col-md-2
-      .row
-        h2= menu.title
-        hr
-      .row
-        form(action="/menus/" + menu.id + "/votes" method="POST")
-          button(type="submit" class="btn btn-lg btn-success") Vote
-      .row
-        p= ('This menu received ' + result.count + ' votes')
-
-    .col-md-6.offset-md-3
-        p= menu.info
+      .col-md-6.offset-md-3
+          p= menu.info

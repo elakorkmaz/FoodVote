@@ -14,6 +14,12 @@ var db = require('./models'),
 
 var app = express();
 
+const adminRoutes = require('./routes/admin'),
+      authenticationRoutes = require('./routes/authentication');
+
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.set('view engine', 'pug');
 
 app.use(compression());
@@ -21,6 +27,10 @@ app.use(compression());
 app.use(express.static('public', { maxAge: '1y' }));
 
 app.use(morgan('dev'));
+app.use(session({ secret: 'secret key'}));
+
+app.use('/', authenticationRoutes);
+app.use('/admin', adminRoutes);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -46,7 +56,15 @@ app.get('/', (req, res) => {
     });
 });
 
-// show individual menu
+app.get('/:slug', (req, res) => {
+  db.meal.findOne({
+    where: {
+      slug: req.params.slug
+    }
+  }).then((Meal) => {
+    res.render('/menus/show', { meal: meal });
+  });
+});
 
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
