@@ -7,7 +7,8 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       session = require('express-session');
 
-var db = require('./models');
+var db = require('./models'),
+    assets = require('./config/assets');
 
 var app = express();
 
@@ -28,6 +29,8 @@ app.use(methodOverride((req, res) => {
     return method;
   }})
 );
+
+app.locals.assets = assets;
 
 app.post('/menus/:id/votes', (req, res) => {
   db.Menu.findById(req.params.id).then((menu) => {
