@@ -1,6 +1,7 @@
 const express = require('express'),
       displayRoutes = require('express-routemap'),
       morgan = require('morgan'),
+      compression = require('compression'),
       pug = require('pug'),
       methodOverride = require('method-override'),
       bodyParser = require('body-parser'),
@@ -12,7 +13,9 @@ var app = express();
 
 app.set('view engine', 'pug');
 
-app.use(express.static('public'));
+app.use(compression());
+
+app.use(express.static('public', { maxAge: '1y' }));
 
 app.use(morgan('dev'));
 
@@ -27,19 +30,16 @@ app.use(methodOverride((req, res) => {
 );
 
 app.post('/menus/:id/votes', (req, res) => {
-    db.Menu.findById(req.params.id).then((menu) => {
-      var vote = req.body;
-
-      db.Vote.create(vote).then(() => {
-          res.redirect('/');
-        }).catch((error) => {
-            throw error;
-        });
+  db.Menu.findById(req.params.id).then((menu) => {
+    db.Vote.create(req.body).then(() => {
+        res.redirect('/');
+      }).catch((error) => {
+        throw error;
       });
+    });
 });
 
 app.get('/', (req, res) => {
-  console.log(req.session);
   db.Menu.findAll().then((menus) => {
     res.render('index', { menus: menus });
   }).catch((error) => {
@@ -53,17 +53,15 @@ app.get('/menus/:slug', (req, res) => {
       slug: req.params.slug
     }
   }).then((menu) => {
-    db.Vote.findAndCountAll({
-    })
-    .then((result) => {
-      console.log(result.count);
-      res.render('menus/show', { menu: menu, result: result });
-    });
+    return db.Vote.findAndCountAll();
+  }).then((result) => {
+    res.render('menus/show', { menu: menu, result: result });
+  }).catch((error) => {
+    throw error;
   });
 });
 
 db.sequelize.sync().then(() => {
-  console.log('connected to database');
   app.listen(3000, () => {
     console.log('server is now running on port 3000');
     displayRoutes(app);

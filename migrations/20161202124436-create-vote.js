@@ -15,7 +15,25 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      MenuId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Menus',
+          key: 'id'
+        },
+        onDelete: 'cascade'
+      },
+      // UserId: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'Users',
+      //     key: 'id'
+      //   },
+      //   onDelete: 'cascade'
+      // }
     });
   },
   down: function(queryInterface, Sequelize) {

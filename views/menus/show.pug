@@ -10,7 +10,6 @@ block content
         hr
       .row
         form(action="/menus/" + menu.id + "/votes" method="POST")
-          input(type="hidden" name="MenuId" value=menu.id)
           button(type="submit" class="btn btn-lg btn-success") Vote
       .row
         p= ('This menu received ' + result.count + ' votes')

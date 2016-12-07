@@ -1,27 +1,30 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Menus', {
+    return queryInterface.createTable('UserMenus', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      slug: {
-        type: Sequelize.STRING,
+      // UserId: {
+      //   type: Sequelize.INTEGER,
+      //   allowNull: false,
+      //   references: {
+      //     model: 'Users',
+      //     key: 'id'
+      //   },
+      //   onDelete: 'cascade'
+      // },
+      MenuId: {
         allowNull: false,
-        unique: true
-      },
-      image: {
-        type: Sequelize.STRING
-      },
-      info: {
-        type: Sequelize.TEXT
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Menus',
+          key: 'id'
+        },
+        onDelete: 'cascade'
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +37,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Menus');
+    return queryInterface.dropTable('UserMenus');
   }
 };

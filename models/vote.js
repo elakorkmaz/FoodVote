@@ -7,12 +7,14 @@ module.exports = function(sequelize, DataTypes) {
         model: "Menus",
         key: "id"
       }
-    }
+    },
+     // add UserId here
 }, {
   classMethods: {
     associate: function(models) {
       // associations can be defined here
       this.belongsTo(models.Menu);
+      // this.belongsTo(models.User);
     }
   }
 });
