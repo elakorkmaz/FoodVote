@@ -50,6 +50,17 @@ app.post('/login',(req,res) => {
   res.redirect('/login');
   });
 });
+// WE GO TO THE ADMIN SESSION
+app.get('/admin/menuposts',(req,res) =>{
+  res.render('admin/index');
+});
+
+///we make hier a log out who send to the homepage
+app.get('/logout',(req,res) =>{
+  re.session.user = undefined;
+  res.redirect('/');
+
+});
 ///
 app.post('/users', (req,res) => {
   console.log(req.body);
@@ -59,6 +70,11 @@ app.post('/users', (req,res) => {
 }).catch(() => {
   res.redirect('/register');
   });
+});
+
+// admin can add a new menu
+app.get('/admin/menus/new', (req, res) =>{
+  res.render('admin/new');
 });
 
 app.get('/:slug', (req, res) => {
