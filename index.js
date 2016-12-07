@@ -7,6 +7,8 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       session = require('express-session');
 
+const userRouter = require('./routes/user');
+
 var db = require('./models'),
     assets = require('./config/assets');
 
@@ -30,28 +32,21 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
+app.use('/user', userRouter);
+
 app.locals.assets = assets;
 
-app.post('/menus/:id/votes', (req, res) => {
-  db.Menu.findById(req.params.id).then((menu) => {
-    var vote = req.body;
-    vote.MenuId = menu.id;
+// landing page ------------------------------------------------------------- //
 
-    db.Vote.create(req.body).then(() => {
-        res.redirect('/');
-      }).catch((error) => {
-        throw error;
-      });
+app.get('/', (req, res) => {
+    db.Menu.findAll().then((menus) => {
+      res.render('index', { menus: menus });
+    }).catch((error) => {
+      res.status(404).end();
     });
 });
 
-app.get('/', (req, res) => {
-  db.Menu.findAll().then((menus) => {
-    res.render('index', { menus: menus });
-  }).catch((error) => {
-    res.status(404).end();
-  });
-});
+// show individual menu
 
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
@@ -66,6 +61,20 @@ app.get('/menus/:slug', (req, res) => {
     });
   });
 });
+
+app.post('/menus/:id/votes', (req, res) => {
+  db.Menu.findById(req.params.id).then((menu) => {
+    var vote = req.body;
+    vote.MenuId = menu.id;
+
+    db.Vote.create(req.body).then(() => {
+        res.redirect('/');
+      }).catch((error) => {
+        throw error;
+      });
+    });
+});
+
 
 db.sequelize.sync().then(() => {
   app.listen(3000, () => {
