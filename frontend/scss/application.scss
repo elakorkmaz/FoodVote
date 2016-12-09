@@ -2,8 +2,12 @@
 @import "vendor";
 @import "components";
 
+nav.navbar.navbar-lg {
+  padding-top: 0;
+}
+
 .navbar-brand {
-  font: 'Segoe UI';
+  font: 'Arial';
   font-size: 58;
   font-weight: bold;
   color: black
@@ -14,8 +18,30 @@
 }
 
 .container {
+  margin-top: 3%;
+}
+
+.container p {
+  font-family: 'Serif';
+}
+
+.container h2 {
+  text-align: center;
+}
+
+.container h6 {
+  text-align: center;
+}
+
+.container h4 {
+  margin-top: 2.5%;
 }
 
 .navbar.navbar-fixed-bottom.navbar-lg {
   display: block
+}
+
+.btn.btn-link button {
+  padding: 0;
+  margin: 0, auto;
 }
