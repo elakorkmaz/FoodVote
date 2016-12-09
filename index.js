@@ -15,9 +15,6 @@ var app = express();
 const adminRoutes = require('./routes/admin'),
       authenticationRoutes = require('./routes/authentication');
 
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
-
 app.set('view engine', 'pug');
 
 app.use(compression());
@@ -25,6 +22,7 @@ app.use(compression());
 app.use(express.static('public', { maxAge: '1y' }));
 
 app.use(morgan('dev'));
+
 app.use(session({ secret: 'secret key'}));
 
 app.use('/', authenticationRoutes);
@@ -45,32 +43,14 @@ app.locals.assets = assets;
 // landing page ------------------------------------------------------------- //
 
 app.get('/', (req, res) => {
-  db.Menu.findOne({
-    where: {
-      id: 1
-    }
-  }).then((menu1) => {
-    db.Menu.findOne({
-      where: {
-        id: 2
-      }
-    }).then((menu2) => {
-      db.Menu.findOne({
-        where: {
-          id: 3
-        }
-    }).then((menu3) => {
-    db.Menu.findAll().then((menu) => {
-      res.render('index', { menu: menu, menu1: menu1, menu2: menu2, menu3: menu3 });
+  db.Menu.findAll().then((menus) => {
+    res.render('index', { menus: menus });
     }).catch((error) => {
       res.status(404).end();
-    });
-      });
-    });
   });
 });
 
-// menu pages
+// menu pages --------------------------------------------------------------- //
 
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
@@ -86,7 +66,7 @@ app.get('/menus/:slug', (req, res) => {
   });
 });
 
-// posting a vote
+// posting a vote ----------------------------------------------------------- //
 
 app.post('/menus/:id/votes', (req, res) => {
   db.Menu.findById(req.params.id).then((menu) => {
@@ -101,7 +81,7 @@ app.post('/menus/:id/votes', (req, res) => {
     });
 });
 
-// starting server
+// starting server ---------------------------------------------------------- //
 
 db.sequelize.sync().then(() => {
   app.listen(3000, () => {
