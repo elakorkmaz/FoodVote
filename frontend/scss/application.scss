@@ -1,3 +1,21 @@
 @import "bootstrap";
 @import "vendor";
 @import "components";
+
+.navbar-brand {
+  font: 'Segoe UI';
+  font-size: 58;
+  font-weight: bold;
+  color: black
+}
+
+.nav.navbar-nav.float-xs-right {
+  margin-top: 2.5%;
+}
+
+.container {
+}
+
+.navbar.navbar-fixed-bottom.navbar-lg {
+  display: block
+}
