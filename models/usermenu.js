@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         this.belongsTo(models.Menu);
-        // this.belongsTo(models.User);
+        this.belongsTo(models.User);
       }
     }
   });

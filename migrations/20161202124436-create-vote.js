@@ -25,15 +25,15 @@ module.exports = {
         },
         onDelete: 'cascade'
       },
-      // UserId: {
-      //   allowNull: false,
-      //   type: Sequelize.INTEGER,
-      //   references: {
-      //     model: 'Users',
-      //     key: 'id'
-      //   },
-      //   onDelete: 'cascade'
-      // }
+      UserId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'cascade'
+      }
     });
   },
   down: function(queryInterface, Sequelize) {

@@ -1,11 +1,11 @@
-extends ../views/application.pug
+extends ../application.pug
 
 block content
   .container
     .row
-      .col-md-4.offset-md-3
-        img(src= menu.image width="450" height="300")
-      .col-md-2
+      .col-md-5.offset-md-2
+        img(src= menu.image width="400" height="300")
+      .col-md-3
         .row
           h2= menu.title
           hr
@@ -15,5 +15,6 @@ block content
         .row
           p= ('This menu received ' + result.count + ' votes')
 
-      .col-md-6.offset-md-3
+      .col-md-8.offset-md-2
+          h4 Ingredients:
           p= menu.info
