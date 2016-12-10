@@ -5,7 +5,7 @@ var express = require('express'),
 
 // admin landing page ----------------------------------------------------------
 
-router.get('/menus', (req, res) => {
+router.get('/', (req, res) => {
   db.Menu.findAll().then((menus) => {
     res.render('admin/index', { menus: menus });
   });
@@ -82,7 +82,7 @@ router.put('/edit/:id', (req, res) => {
       id: req.params.id
     }
   }).then(() => {
-    res.redirect('/admin/menus');
+    res.redirect('/admin/');
   });
 });
 
@@ -94,7 +94,7 @@ router.delete('/menus/:id', (req, res) => {
       id: req.params.id
     }
   }).then(() => {
-    res.redirect('/admin/menus');
+    res.redirect('/admin/');
   });
 });
 
