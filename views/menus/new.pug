@@ -2,19 +2,23 @@ extends ../application.pug
 
 block content
 
-  form(action='/admin/posts', method='POST')
-  .form-group
-    label Menu Title:
-    input.form-control(type='text', name='title')
-  .form-group
-    label Menu Slug:
-    input.form-control(type='text', name='slug')
-  //- upload image:
-  //- .form-group
-  //-   label Menu Image:
-  //-   input.form-control(type='text', name='image')
-  .form-group
-    label Menu content:
-    textarea.form-control(rows='20', name='content')
-  .form-group.text-xs-right
-    button.btn.btn-success.btn-lg(type='submit') Create Menu
+  .container
+      .row
+        .col-xs-8.offset-xs-2
+          h2 Post a new menu
+          form(action="/admin/menus/new" method="POST")
+            .form-group
+              label(for="menu-title") Title
+              input(name="title" type="text" class="form-control" id="menu-title" required=true)
+            .form-group
+              label(for="menu-slug") Slug
+              input(name="slug" type="text" class="form-control" id="menu-slug" required=true)
+            //- upload image
+            //- .form-group
+            //-   label Image
+            //-   input.form-control(type='text', name='image')
+            .form-group
+              label(for="menu-info") Info
+              textarea(name="info" class="form-control" rows=10 id="menu-info" required=true)
+            .form-group.text-xs-right
+              button(type="submit" class="btn btn-lg btn-success") Add new menu

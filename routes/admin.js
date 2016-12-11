@@ -32,7 +32,7 @@ router.post('/register', (req, res) => {
 // login admin -----------------------------------------------------------------
 
 router.get('/login', (req, res) => {
-  res.render('/admin/login');
+  res.render('admin/login');
 });
 
 router.post('/login', (req, res) => {
@@ -68,7 +68,11 @@ router.get('/logout', (req, res) => {
 
 // create new menu -------------------------------------------------------------
 
-router.post('/new', (req, res) => {
+router.get('/menus/new', (req, res) => {
+  res.render('menus/new');
+});
+
+router.post('/menus/new', (req, res) => {
   db.Menu.create(req.body).then((Menu) => {
     res.redirect('/' + menu.slug);
   });
@@ -76,7 +80,11 @@ router.post('/new', (req, res) => {
 
 // edit menu -------------------------------------------------------------------
 
-router.put('/edit/:id', (req, res) => {
+router.get('/menus/:id/edit', (req, res) => {
+// need to complete
+});
+
+router.put('/menus/:id/', (req, res) => {
   db.Menu.update(req.body, {
     where: {
       id: req.params.id

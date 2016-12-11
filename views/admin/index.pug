@@ -3,7 +3,7 @@ extends ../application.pug
 block content
   .container
     .row
-      form(action='/admin/new', method='POST')
+      a(href='/menus/new')
         button.btn.btn-lg.btn-success(type='submit') Add new menu
     each menu in menus
       .row
@@ -12,8 +12,8 @@ block content
             .col-xs-8
               h2= menu.title
             .col-xs-2.text-xs-right
-              a.btn.btn-warning(href='/admin/posts/edit' + menu.id) Edit menu
+              a.btn.btn-warning(href='/admin/menus/' + menu.id + '/edit') Edit menu
             .col-xs-2.text-xs-right
-              form(action='/admin/posts/', method='POST')
+              form(action='/admin/menus/', method='POST')
                 input(type='hidden', name='_method', value='DELETE')
                 button.btn.btn-danger(type='submit') Remove menu
