@@ -17,18 +17,11 @@ const adminRoutes = require('./routes/admin'),
 
 app.set('view engine', 'pug');
 
-app.use(compression());
-
-app.use(express.static('public', { maxAge: '1y' }));
-
 app.use(morgan('dev'));
 
-app.use(session({ secret: 'secret key'}));
-
-app.use('/', authenticationRoutes);
-app.use('/admin', adminRoutes);
-
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(session({ secret: 'secret key'}));
 
 app.use(methodOverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -38,9 +31,15 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
+app.use('/admin', adminRoutes);
+
+app.use(compression());
+
+app.use(express.static('public', { maxAge: '1y' }));
+
 app.locals.assets = assets;
 
-// landing page ------------------------------------------------------------- //
+// landing page ----------------------------------------------------------------
 
 app.get('/', (req, res) => {
   db.Menu.findAll().then((menus) => {
@@ -50,7 +49,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// menu pages --------------------------------------------------------------- //
+// menu pages ------------------------------------------------------------------
 
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
@@ -66,7 +65,7 @@ app.get('/menus/:slug', (req, res) => {
   });
 });
 
-// posting a vote ----------------------------------------------------------- //
+// posting a vote --------------------------------------------------------------
 
 app.post('/menus/:id/votes', (req, res) => {
   db.Menu.findById(req.params.id).then((menu) => {
@@ -81,7 +80,7 @@ app.post('/menus/:id/votes', (req, res) => {
     });
 });
 
-// starting server ---------------------------------------------------------- //
+// starting server -------------------------------------------------------------
 
 db.sequelize.sync().then(() => {
   app.listen(3000, () => {

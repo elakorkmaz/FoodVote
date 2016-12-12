@@ -1,10 +1,10 @@
 extends ../application.pug
 
 block content
+
   .container
     .row
-      a(href='/menus/new')
-        button.btn.btn-lg.btn-success(type='submit') Add new menu
+      a.btn.btn-lg.btn-success(href='/admin/menus/new') Add new menu
     each menu in menus
       .row
         .card.card-block

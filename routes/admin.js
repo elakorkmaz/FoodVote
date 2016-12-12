@@ -6,8 +6,10 @@ var express = require('express'),
 // admin landing page ----------------------------------------------------------
 
 router.get('/', (req, res) => {
-  db.Menu.findAll().then((menus) => {
+  db.Menu.findAll({ order: [['createdAt', 'DESC']] }).then((menus) => {
     res.render('admin/index', { menus: menus });
+  }).catch((error) => {
+    throw error;
   });
 });
 
@@ -17,15 +19,18 @@ router.get('/register', (req, res) => {
   res.render('admin/new');
 });
 
+
 router.post('/register', (req, res) => {
   db.User.create((req.body), {
     where: {
       admin: true
     }
-  }).then(() => {
-    res.redirect('/admin/');
+  }).then((user) => {
+    res.redirect('/admin');
   }).catch((error) => {
-    res.redirect('/admin/register');
+    console.log('error occured');
+    console.log(error);
+    res.render('admin/new', { errors: error.errors });
   });
 });
 
@@ -81,16 +86,22 @@ router.post('/menus/new', (req, res) => {
 // edit menu -------------------------------------------------------------------
 
 router.get('/menus/:id/edit', (req, res) => {
-// need to complete
+  db.Menu.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then((menu) => {
+  res.render('menus/edit', { menu: menu });
+  });
 });
 
-router.put('/menus/:id/', (req, res) => {
+router.put('/menus/:id', (req, res) => {
   db.Menu.update(req.body, {
     where: {
       id: req.params.id
     }
   }).then(() => {
-    res.redirect('/admin/');
+    res.redirect('/admin');
   });
 });
 
@@ -102,7 +113,7 @@ router.delete('/menus/:id', (req, res) => {
       id: req.params.id
     }
   }).then(() => {
-    res.redirect('/admin/');
+    res.redirect('/admin');
   });
 });
 
