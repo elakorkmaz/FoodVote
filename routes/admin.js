@@ -78,7 +78,7 @@ router.get('/menus/new', (req, res) => {
 });
 
 router.post('/menus/new', (req, res) => {
-  db.Menu.create(req.body).then((Menu) => {
+  db.Menu.create(req.body).then((menu) => {
     res.redirect('/' + menu.slug);
   });
 });
