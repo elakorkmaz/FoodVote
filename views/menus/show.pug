@@ -1,18 +1,21 @@
-extends ../views/application.pug
+extends ../application.pug
 
 block content
   .container
     .row
-      .col-md-4.offset-md-3
-        img(src="/img/1.jpg")
-      .col-md-2
+      .col-md-5.offset-md-2
+        img(src= menu.image width="425" height="300")
+      .col-md-3
         .row
-          h2=meal.title
+          h2= menu.title
           hr
         .row
-          img(src="/img/heart.svg.png" width="200px" height="200px")
+          form(action="/menus/" + menu.id + "/votes" method="POST")
+            button(type="submit" class="btn btn-link")
+              img(src= "/img/heart.svg.png" width= "250" height= "175")
         .row
-          p=meal.likes
-    .row
-      .col-md-6.offset-md-3
-        p=meal.content
+          h6= ('This menu received ' + result.count + ' votes')
+
+      .col-md-8.offset-md-2
+          h4 Ingredients:
+          p= menu.info

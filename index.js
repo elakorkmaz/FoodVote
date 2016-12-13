@@ -1,26 +1,28 @@
 const express = require('express'),
       displayRoutes = require('express-routemap'),
       morgan = require('morgan'),
-      session = require ('express-session'),
+      compression = require('compression'),
+      pug = require('pug'),
+      methodOverride = require('method-override'),
       bodyParser = require('body-parser'),
-      pug = require('pug');
-      methodOverride = require('method-override');
+      session = require('express-session');
 
-var db = require('./models');
+var db = require('./models'),
+    assets = require('./config/assets');
 
 var app = express();
 
 const adminRoutes = require('./routes/admin'),
       authenticationRoutes = require('./routes/authentication');
 
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
-
 app.set('view engine', 'pug');
 
-app.use(express.static('public'));
+app.use(compression());
+
+app.use(express.static('public', { maxAge: '1y' }));
 
 app.use(morgan('dev'));
+
 app.use(session({ secret: 'secret key'}));
 
 app.use('/', authenticationRoutes);
@@ -36,23 +38,19 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
+app.locals.assets = assets;
+
+// landing page ------------------------------------------------------------- //
+
 app.get('/', (req, res) => {
   db.Menu.findAll().then((menus) => {
     res.render('index', { menus: menus });
-  }).catch((error) => {
-    res.status(404).end();
+    }).catch((error) => {
+      res.status(404).end();
   });
 });
 
-app.get('/:slug', (req, res) => {
-  db.meal.findOne({
-    where: {
-      slug: req.params.slug
-    }
-  }).then((Meal) => {
-    res.render('/menus/show', { meal: meal });
-  });
-});
+// menu pages --------------------------------------------------------------- //
 
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
@@ -60,14 +58,32 @@ app.get('/menus/:slug', (req, res) => {
       slug: req.params.slug
     }
   }).then((menu) => {
-    res.render('menus/show', { menu: menu });
-  }).catch((error) => {
-    res.status(404).end();
+    return db.Vote.findAndCountAll({
+    })
+    .then((result) => {
+      res.render('menus/show', { menu: menu, result: result });
+    });
   });
 });
 
+// posting a vote ----------------------------------------------------------- //
+
+app.post('/menus/:id/votes', (req, res) => {
+  db.Menu.findById(req.params.id).then((menu) => {
+    var vote = req.body;
+    vote.MenuId = menu.id;
+
+    db.Vote.create(req.body).then(() => {
+        res.redirect('/');
+      }).catch((error) => {
+        throw error;
+      });
+    });
+});
+
+// starting server ---------------------------------------------------------- //
+
 db.sequelize.sync().then(() => {
-  console.log('connected to database');
   app.listen(3000, () => {
     console.log('server is now running on port 3000');
     displayRoutes(app);

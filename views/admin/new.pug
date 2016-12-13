@@ -2,13 +2,13 @@ extends ../application.pug
 
 block content
 
-  form(action='/admin/posts', method='POST')
+  form(action='/admin/register', method='POST')
   .form-group
-    label Menu Title:
-    input.form-control(type='text', name='title')
+    label Name:
+    input.form-control(type='text', name='name')
   .form-group
-    label Menu Slug:
-    input.form-control(type='text', name='slug')
+    label Surname:
+    input.form-control(type='text', name='surname')
   .form-group
     label Menu content:
     textarea.form-control(rows='20', name='content')
