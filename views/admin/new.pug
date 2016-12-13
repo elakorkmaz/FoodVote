@@ -6,6 +6,7 @@ block content
       .col-xs-6.offset-xs-3
         h2 Register an administrator
         form(action="/admin/register" method="POST")
+          input(type="hidden" name="_method" value="PUT")
           .form-group
             input(type="name" name="name" class="form-control" placeholder="Name" required=true)
           .form-group

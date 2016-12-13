@@ -79,7 +79,7 @@ router.get('/menus/new', (req, res) => {
 
 router.post('/menus/new', (req, res) => {
   db.Menu.create(req.body).then((menu) => {
-    res.redirect('/' + menu.slug);
+    res.redirect('/menus/' + menu.slug);
   });
 });
 
@@ -95,7 +95,7 @@ router.get('/menus/:id/edit', (req, res) => {
   });
 });
 
-router.put('/menus/:id', (req, res) => {
+router.post('/menus/:id', (req, res) => {
   db.Menu.update(req.body, {
     where: {
       id: req.params.id
