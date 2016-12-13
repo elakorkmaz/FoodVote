@@ -19,7 +19,6 @@ router.get('/register', (req, res) => {
   res.render('admin/new');
 });
 
-
 router.post('/register', (req, res) => {
   db.User.create((req.body), {
     where: {

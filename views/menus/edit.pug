@@ -9,13 +9,13 @@ block content
           form(action="/admin/menus/" + menu.id method="POST")
             .form-group
               label Title
-              input(name="title" type="text" class="form-control" id="menu-title" value=menu.title required=true)
+              input(name="title" type="text" class="form-control" id="menu-title" value= menu.title required=true)
             .form-group
               label Slug
-              input(name="slug" type="text" class="form-control" id="menu-slug" value=menu.slug required=true)
+              input(name="slug" type="text" class="form-control" id="menu-slug" value= menu.slug required=true)
             .form-group
               label Image
-              input(name="image" type="text" class="form-control" id="menu-image" value=menu.image required=true)
+              input(name="image" type="text" class="form-control" id="menu-image" value= menu.image required=true)
             .form-group
               label Info
               textarea(name="info" class="form-control" rows=10 id="menu-info" required=true)= menu.info

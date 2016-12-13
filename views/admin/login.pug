@@ -5,11 +5,10 @@ block content
     .row
       .col-xs-6.offset-xs-3
         h2 Login as admin
-
         form(action="/admin/login" method="POST")
           .form-group
-            input(type="email" name="email" class="form-control" placeholder="email" required=true)
+            input(type="text" name="email" class="form-control" placeholder="email" required=true)
           .form-group
-            input(type="password" name="password" class="form-control" placeholder="password" required=true)
+            input(type="text" name="password" class="form-control" placeholder="password" required=true)
           .form-goup.text-xs-right
             button(type="submit" class="btn btn-succes btn-lg") Login
