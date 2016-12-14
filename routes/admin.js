@@ -20,16 +20,16 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-  db.User.create((req.body), {
-    where: {
+  db.User.create({
+      name: req.body.name,
+      surname: req.body.surname,
+      email: req.body.email,
+      password: req.body.password,
       admin: true
-    }
   }).then((user) => {
     res.redirect('/admin');
   }).catch((error) => {
-    console.log('error occured');
-    console.log(error);
-    res.render('admin/new', { errors: error.errors });
+    res.redirect('/admin/register');
   });
 });
 
@@ -57,8 +57,6 @@ router.post('/login', (req, res) => {
       }
     });
   }).catch((error) => {
-    console.log('error occured');
-    console.log(error);
     res.redirect('/admin/login');
   });
 });
