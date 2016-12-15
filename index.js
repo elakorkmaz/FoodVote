@@ -41,9 +41,9 @@ app.locals.assets = assets;
 
 // landing page ----------------------------------------------------------------
 
-app.get('/', (req, res) => {
+app.get('/users', (req, res) => {
   db.Menu.findAll().then((menus) => {
-    res.render('index', { menus: menus, user: req.session.user });
+    res.render('users/index', { menus: menus, user: req.session.user });
     }).catch((error) => {
       res.status(404).end();
   });
@@ -80,8 +80,9 @@ app.post('/menus/:id/votes', (req, res) => {
     userMenu.UserId = user.id;
 
     db.UserMenu.create(userMenu).then(() => {
-        res.redirect('/');
+        res.redirect('/users');
       });
+    res.redirect('/users');
   });
 });
 
