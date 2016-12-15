@@ -66,7 +66,7 @@ router.get('/menus/:id/edit', (req, res) => {
   });
 });
 
-router.post('/menus/:id', (req, res) => {
+router.put('/menus/:id', (req, res) => {
   db.Menu.update(req.body, {
     where: {
       id: req.params.id

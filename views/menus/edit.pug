@@ -7,6 +7,7 @@ block content
         .col-xs-8.offset-xs-2
           h2= "Edit " + menu.title
           form(action="/admin/menus/" + menu.id method="POST")
+            input(type="hidden" name="_method" value="PUT")
             .form-group
               label Title
               input(name="title" type="text" class="form-control" id="menu-title" value= menu.title required=true)
