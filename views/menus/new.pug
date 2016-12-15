@@ -1,0 +1,23 @@
+extends ../application.pug
+
+block content
+
+  .container
+      .row
+        .col-xs-8.offset-xs-2
+          h2 Post a new menu
+          form(action="/admin/menus/new" method="POST")
+            .form-group
+              label(for="menu-title") Title
+              input(name="title" type="text" class="form-control" id="menu-title" required=true)
+            .form-group
+              label(for="menu-slug") Slug
+              input(name="slug" type="text" class="form-control" id="menu-slug" required=true)
+            .form-group
+              label(for="menu-image") Image
+              input(name ="image" type='text', class="form-control" id="menu-image" required=true)
+            .form-group
+              label(for="menu-info") Info
+              textarea(name="info" class="form-control" rows=10 id="menu-info" required=true)
+            .form-group.text-xs-right
+              button(type="submit" class="btn btn-lg btn-success") Add new menu

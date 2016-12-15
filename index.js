@@ -17,18 +17,11 @@ const adminRoutes = require('./routes/admin'),
 
 app.set('view engine', 'pug');
 
-app.use(compression());
-
-app.use(express.static('public', { maxAge: '1y' }));
-
 app.use(morgan('dev'));
 
-app.use(session({ secret: 'secret key'}));
-
-app.use('/', authenticationRoutes);
-app.use('/admin', adminRoutes);
-
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(session({ secret: 'secret key'}));
 
 app.use(methodOverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -38,19 +31,25 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
+app.use('/admin', adminRoutes);
+
+app.use(compression());
+
+app.use(express.static('public', { maxAge: '1y' }));
+
 app.locals.assets = assets;
 
-// landing page ------------------------------------------------------------- //
+// landing page users ----------------------------------------------------------------
 
-app.get('/', (req, res) => {
+app.get('/users', (req, res) => {
   db.Menu.findAll().then((menus) => {
-    res.render('index', { menus: menus });
+    res.render('users/index', { menus: menus, user: req.session.user });
     }).catch((error) => {
       res.status(404).end();
   });
 });
 
-// menu pages --------------------------------------------------------------- //
+// menu pages ------------------------------------------------------------------
 
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
@@ -58,10 +57,12 @@ app.get('/menus/:slug', (req, res) => {
       slug: req.params.slug
     }
   }).then((menu) => {
-    return db.Vote.findAndCountAll({
-    })
-    .then((result) => {
-      res.render('menus/show', { menu: menu, result: result });
+    db.UserMenu.findAndCountAll({
+      where: {
+        MenuId: menu.id
+      }
+    }).then((voteCount) => {
+      res.render('menus/show', { menu: menu, voteCount: voteCount, user: req.session.user });
     });
   });
 });
