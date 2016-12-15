@@ -8,13 +8,19 @@ module.exports = function(sequelize, DataTypes) {
         key: "id"
       }
     },
-     // add UserId here
+    UserId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Users",
+        key: "id"
+      }
+    },
 }, {
   classMethods: {
     associate: function(models) {
       // associations can be defined here
       this.belongsTo(models.Menu);
-      // this.belongsTo(models.User);
+      this.belongsTo(models.User);
     }
   }
 });

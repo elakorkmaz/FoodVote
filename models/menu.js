@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
         // associations can be defined here
         this.hasMany(models.Vote);
         this.hasMany(models.UserMenu);
-        // this.belongsToMany(models.User, { through: 'UserMenu'});
+        this.belongsToMany(models.User, { through: 'UserMenu'});
       }
     }
   });

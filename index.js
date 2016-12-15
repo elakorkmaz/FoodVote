@@ -7,8 +7,6 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       session = require('express-session');
 
-const userRouter = require('./routes/user');
-
 var db = require('./models'),
     assets = require('./config/assets');
 
@@ -17,9 +15,6 @@ var app = express();
 const adminRoutes = require('./routes/admin'),
       authenticationRoutes = require('./routes/authentication');
 
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
-
 app.set('view engine', 'pug');
 
 app.use(compression());
@@ -27,6 +22,7 @@ app.use(compression());
 app.use(express.static('public', { maxAge: '1y' }));
 
 app.use(morgan('dev'));
+
 app.use(session({ secret: 'secret key'}));
 
 app.use('/', authenticationRoutes);
@@ -42,29 +38,21 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
-app.use('/user', userRouter);
-
 app.locals.assets = assets;
 
 // landing page ------------------------------------------------------------- //
 
 app.get('/', (req, res) => {
-    db.Menu.findAll().then((menus) => {
-      res.render('index', { menus: menus });
+  db.Menu.findAll().then((menus) => {
+    res.render('index', { menus: menus });
     }).catch((error) => {
       res.status(404).end();
     });
 });
 
-// app.get('/:slug', (req, res) => {
-//   db.Meal.findOne({
-//     where: {
-//       slug: req.params.slug
-//     }
-//   }).then((Meal) => {
-//     res.render('/menus/show', { meal: meal });
-//   });
-// });
+
+
+// menu pages --------------------------------------------------------------- //
 
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
@@ -80,6 +68,8 @@ app.get('/menus/:slug', (req, res) => {
   });
 });
 
+// posting a vote ----------------------------------------------------------- //
+
 app.post('/menus/:id/votes', (req, res) => {
   db.Menu.findById(req.params.id).then((menu) => {
     var vote = req.body;
@@ -93,6 +83,7 @@ app.post('/menus/:id/votes', (req, res) => {
     });
 });
 
+// starting server ---------------------------------------------------------- //
 
 db.sequelize.sync().then(() => {
   app.listen(3000, () => {
