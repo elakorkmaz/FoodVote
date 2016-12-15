@@ -7,7 +7,7 @@ var express = require('express'),
 
 router.get('/', (req, res) => {
   db.Menu.findAll({ order: [['createdAt', 'DESC']] }).then((menus) => {
-    res.render('admin/index', { menus: menus });
+    res.render('admin/index', { menus: menus, user: req.session.user });
   }).catch((error) => {
     throw error;
   });
@@ -48,14 +48,8 @@ router.post('/login', (req, res) => {
       admin: true
     }
   }).then((userInDB) => {
-    bcrypt.compare(req.body.password, userInDB.password, (error, result) => {
-      if (result) {
         req.session.user = userInDB;
-        res.redirect('/');
-      } else {
-        res.redirect('/admin/login');
-      }
-    });
+        res.redirect('/admin');
   }).catch((error) => {
     res.redirect('/admin/login');
   });
