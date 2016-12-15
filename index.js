@@ -47,8 +47,10 @@ app.get('/', (req, res) => {
     res.render('index', { menus: menus });
     }).catch((error) => {
       res.status(404).end();
-  });
+    });
 });
+
+
 
 // menu pages --------------------------------------------------------------- //
 

@@ -26,11 +26,11 @@ router.post('/register', (req, res) => {
 
 // login user --------------------------------------------------------------- //
 
-router.get('/users/login', (req, res) => {
-  res.render('users/login');
+router.get('/login', (req, res) => {
+  res.render('index');
 });
 
-router.post('/users/login', (req, res) => {
+router.post('/login', (req, res) => {
   console.log(req.body);
 
   db.User.findOne({
