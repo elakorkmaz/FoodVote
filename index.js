@@ -56,15 +56,15 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/:slug', (req, res) => {
-  db.meal.findOne({
-    where: {
-      slug: req.params.slug
-    }
-  }).then((Meal) => {
-    res.render('/menus/show', { meal: meal });
-  });
-});
+// app.get('/:slug', (req, res) => {
+//   db.Meal.findOne({
+//     where: {
+//       slug: req.params.slug
+//     }
+//   }).then((Meal) => {
+//     res.render('/menus/show', { meal: meal });
+//   });
+// });
 
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
