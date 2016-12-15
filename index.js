@@ -67,25 +67,6 @@ app.get('/menus/:slug', (req, res) => {
   });
 });
 
-// posting a vote --------------------------------------------------------------
-
-app.post('/menus/:id/votes', (req, res) => {
-  db.Menu.findById(req.params.id).then((menu) => {
-    var userMenu = req.body;
-    userMenu.MenuId = menu.id;
-  });
-
-  db.User.findById(req.session.user.id).then((user) => {
-    var userMenu = req.body;
-    userMenu.UserId = user.id;
-
-    db.UserMenu.create(userMenu).then(() => {
-        res.redirect('/users');
-      });
-    res.redirect('/users');
-  });
-});
-
 // starting server -------------------------------------------------------------
 
 db.sequelize.sync().then(() => {
