@@ -1,4 +1,3 @@
-
 var express = require('express'),
     bcrypt = require('bcrypt'),
     db = require('../models'),
