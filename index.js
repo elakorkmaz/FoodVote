@@ -43,7 +43,7 @@ app.locals.assets = assets;
 
 app.get('/', (req, res) => {
   db.Menu.findAll().then((menus) => {
-    res.render('index', { menus: menus });
+    res.render('index', { menus: menus, user: req.session.user });
     }).catch((error) => {
       res.status(404).end();
   });
@@ -54,13 +54,15 @@ app.get('/', (req, res) => {
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
     where: {
-      slug: req.params.slug
+      slug: req.params.slug,
     }
   }).then((menu) => {
-    return db.Vote.findAndCountAll({
-    })
-    .then((result) => {
-      res.render('menus/show', { menu: menu, result: result });
+    db.UserMenu.findAndCountAll({
+      where: {
+        MenuId: menu.id
+      }
+    }).then((result) => {
+      res.render('menus/show', { menu: menu, result: result, user: req.session.user });
     });
   });
 });
@@ -69,15 +71,18 @@ app.get('/menus/:slug', (req, res) => {
 
 app.post('/menus/:id/votes', (req, res) => {
   db.Menu.findById(req.params.id).then((menu) => {
-    var vote = req.body;
-    vote.MenuId = menu.id;
+    var userMenu = req.body;
+    userMenu.MenuId = menu.id;
+  });
 
-    db.Vote.create(req.body).then(() => {
+  db.User.findById(req.session.user.id).then((user) => {
+    var userMenu = req.body;
+    userMenu.UserId = user.id;
+
+    db.UserMenu.create(userMenu).then(() => {
         res.redirect('/');
-      }).catch((error) => {
-        throw error;
       });
-    });
+  });
 });
 
 // starting server -------------------------------------------------------------

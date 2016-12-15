@@ -65,7 +65,7 @@ router.get('/logout', (req, res) => {
 // create new menu -------------------------------------------------------------
 
 router.get('/menus/new', (req, res) => {
-  res.render('menus/new');
+  res.render('menus/new', { user: req.session.user });
 });
 
 router.post('/menus/new', (req, res) => {
@@ -82,7 +82,7 @@ router.get('/menus/:id/edit', (req, res) => {
       id: req.params.id
     }
   }).then((menu) => {
-  res.render('menus/edit', { menu: menu });
+  res.render('menus/edit', { menu: menu, user: req.session.user });
   });
 });
 
