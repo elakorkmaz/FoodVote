@@ -66,19 +66,23 @@ app.get('/menus/:slug', (req, res) => {
   });
 });
 
-// posting a vote ----------------------------------------------------------- //
+// posting a vote --------------------------------------------------------------
 
 app.post('/menus/:id/votes', (req, res) => {
   db.Menu.findById(req.params.id).then((menu) => {
-    var vote = req.body;
-    vote.MenuId = menu.id;
+    var userMenu = req.body;
+    userMenu.MenuId = menu.id;
+  });
 
-    db.Vote.create(req.body).then(() => {
-        res.redirect('/');
-      }).catch((error) => {
-        throw error;
+  db.User.findById(req.session.user.id).then((user) => {
+    var userMenu = req.body;
+    userMenu.UserId = user.id;
+
+    db.UserMenu.create(userMenu).then(() => {
+        res.redirect('/users');
       });
-    });
+    res.redirect('/users');
+  });
 });
 
 // starting server ---------------------------------------------------------- //
