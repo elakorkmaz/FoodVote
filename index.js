@@ -39,7 +39,7 @@ app.use(express.static('public', { maxAge: '1y' }));
 
 app.locals.assets = assets;
 
-// landing page ----------------------------------------------------------------
+// landing page users ----------------------------------------------------------------
 
 app.get('/users', (req, res) => {
   db.Menu.findAll().then((menus) => {
@@ -54,15 +54,15 @@ app.get('/users', (req, res) => {
 app.get('/menus/:slug', (req, res) => {
   db.Menu.findOne({
     where: {
-      slug: req.params.slug,
+      slug: req.params.slug
     }
   }).then((menu) => {
     db.UserMenu.findAndCountAll({
       where: {
         MenuId: menu.id
       }
-    }).then((result) => {
-      res.render('menus/show', { menu: menu, result: result, user: req.session.user });
+    }).then((voteCount) => {
+      res.render('menus/show', { menu: menu, voteCount: voteCount, user: req.session.user });
     });
   });
 });

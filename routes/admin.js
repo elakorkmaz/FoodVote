@@ -13,26 +13,6 @@ router.get('/', (req, res) => {
   });
 });
 
-// register admin --------------------------------------------------------------
-
-router.get('/register', (req, res) => {
-  res.render('admin/new');
-});
-
-router.post('/register', (req, res) => {
-  db.User.create({
-      name: req.body.name,
-      surname: req.body.surname,
-      email: req.body.email,
-      password: req.body.password,
-      admin: true
-  }).then((user) => {
-    res.redirect('/admin');
-  }).catch((error) => {
-    res.redirect('/admin/register');
-  });
-});
-
 // login admin -----------------------------------------------------------------
 
 router.get('/login', (req, res) => {
