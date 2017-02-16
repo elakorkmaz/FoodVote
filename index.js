@@ -74,6 +74,19 @@ app.get('/menus/:slug', (req, res) => {
   });
 });
 
+// register as user ------------------------------------------------------------
+
+app.get('/users/new', (req, res) => {
+  res.render('users/new');
+});
+
+
+// login as user ---------------------------------------------------------------
+
+app.get('/users/login', (req, res) => {
+  res.render('users/login');
+});
+
 // posting a vote --------------------------------------------------------------
 
 app.post('/menus/:id/votes', (req, res) => {
@@ -87,9 +100,9 @@ app.post('/menus/:id/votes', (req, res) => {
     userMenu.UserId = user.id;
 
     db.UserMenu.create(userMenu).then(() => {
-        res.redirect('/users');
+        res.redirect('users/index');
       });
-    res.redirect('/users');
+    res.redirect('users/index');
   });
 });
 

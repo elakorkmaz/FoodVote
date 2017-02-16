@@ -1,0 +1,14 @@
+extends ../application.pug
+
+block content
+  .container
+    .row
+      .col-xs-6.offset-xs-3
+        h2 Register as a user
+        form(action="/users/new" method="POST")
+          .form-group
+            input(type="text" name="email" class="form-control" placeholder="email" required=true)
+          .form-group
+            input(type="text" name="password" class="form-control" placeholder="password" required=true)
+          .form-goup.text-xs-right
+            button(type="submit" class="btn btn-succes") Register
