@@ -5,7 +5,8 @@ const express = require('express'),
       pug = require('pug'),
       methodOverride = require('method-override'),
       bodyParser = require('body-parser'),
-      session = require('express-session');
+      session = require('express-session'),
+      bcrypt = require('bcrypt');
 
 var db = require('./models'),
     assets = require('./config/assets');
@@ -16,6 +17,14 @@ const adminRoutes = require('./routes/admin'),
       authenticationRoutes = require('./routes/authentication');
 
 app.set('view engine', 'pug');
+
+app.use(methodOverride((req, res) => {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }})
+);
 
 app.use(morgan('dev'));
 
@@ -28,14 +37,6 @@ app.use('/admin', adminRoutes);
 app.use(compression());
 
 app.use(session({ secret: 'secret key'}));
-
-app.use(methodOverride((req, res) => {
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    var method = req.body._method;
-    delete req.body._method;
-    return method;
-  }})
-);
 
 app.locals.assets = assets;
 
@@ -80,11 +81,44 @@ app.get('/users/new', (req, res) => {
   res.render('users/new');
 });
 
+app.post('/register', (req, res) => {
+  db.User.create(req.body).then((user) => {
+    req.session.user = user;
+    res.redirect('/users');
+  }).catch((error) => {
+    console.log(error);
+    res.render('users/new');
+  });
+});
+
 
 // login as user ---------------------------------------------------------------
 
 app.get('/users/login', (req, res) => {
   res.render('users/login');
+});
+
+app.post('/users/login', (req, res) => {
+  console.log(req.body);
+
+  db.User.findOne({
+    where: {
+      email: req.body.email
+    }
+  }).then((userInDB) => {
+    bcrypt.compare(req.body.password, userInDB.password, (error, result) => {
+      if (result) {
+        req.session.user = userInDB;
+        res.redirect('/users/login');
+      } else {
+        res.redirect('/users');
+      }
+    });
+  }).catch((error) => {
+    console.log('error occured');
+    console.log(error);
+    res.redirect('/users/login');
+  });
 });
 
 // posting a vote --------------------------------------------------------------
