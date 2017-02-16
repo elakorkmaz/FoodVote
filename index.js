@@ -21,6 +21,12 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(express.static('public', { maxAge: '1y' }));
+
+app.use('/admin', adminRoutes);
+
+app.use(compression());
+
 app.use(session({ secret: 'secret key'}));
 
 app.use(methodOverride((req, res) => {
@@ -31,15 +37,16 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
-app.use('/admin', adminRoutes);
-
-app.use(compression());
-
-app.use(express.static('public', { maxAge: '1y' }));
-
 app.locals.assets = assets;
 
-// landing page users ----------------------------------------------------------------
+// landing page general --------------------------------------------------------
+
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+
+// landing page users ----------------------------------------------------------
 
 app.get('/users', (req, res) => {
   db.Menu.findAll().then((menus) => {

@@ -1,0 +1,16 @@
+extends application.pug
+
+block content
+
+  .container
+    .row
+      .col-lg-6.offset-lg-3
+        h1(align="center") Welcome to FoodVote!
+    .row
+      .col-lg-6.offset-lg-3
+        a(href='/menus/')
+          button.btn.btn-info(type='button') Log in
+        a(href='/menus/')
+          button.btn.btn-info(type='button') Register
+  .container
+    .row
