@@ -81,13 +81,12 @@ app.get('/users/new', (req, res) => {
   res.render('users/new');
 });
 
-app.post('/register', (req, res) => {
+app.post('/users/new', (req, res) => {
   db.User.create(req.body).then((user) => {
     req.session.user = user;
     res.redirect('/users');
   }).catch((error) => {
-    console.log(error);
-    res.render('users/new');
+    res.render('users/new', { errors: error.errors });
   });
 });
 
@@ -109,9 +108,9 @@ app.post('/users/login', (req, res) => {
     bcrypt.compare(req.body.password, userInDB.password, (error, result) => {
       if (result) {
         req.session.user = userInDB;
-        res.redirect('/users/login');
-      } else {
         res.redirect('/users');
+      } else {
+        res.redirect('/users/login');
       }
     });
   }).catch((error) => {
@@ -120,6 +119,10 @@ app.post('/users/login', (req, res) => {
     res.redirect('/users/login');
   });
 });
+
+// log out ---------------------------------------------------------------------
+
+
 
 // posting a vote --------------------------------------------------------------
 

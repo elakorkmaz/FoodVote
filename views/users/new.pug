@@ -7,6 +7,10 @@ block content
         h2 Register as a user
         form(action="/users/new" method="POST")
           .form-group
+            input(type="text" name="name" class="form-control" placeholder="Name" required=true)
+          .form-group
+            input(type="text" name="surname" class="form-control" placeholder="Surname" required=true)
+          .form-group
             input(type="text" name="email" class="form-control" placeholder="email" required=true)
           .form-group
             input(type="text" name="password" class="form-control" placeholder="password" required=true)
