@@ -4,7 +4,7 @@ block content
   .container
     .row
       .col-md-5.offset-md-2
-        img(src= menu.image height="300")
+        img(src= menu.image)
       .col-md-3
         .row
           h2= menu.title
@@ -12,7 +12,7 @@ block content
         .row
           form(action="/menus/" + menu.id + "/votes" method="POST")
             button(type="submit" class="btn btn-link")
-              img(src= "/img/heart.svg.png" width= "250" height= "175")
+              img(src= "/img/heart.svg.png")
         .row
           p= ('This menu received ' + voteCount.count + ' votes')
 

@@ -3,57 +3,50 @@ var express = require('express'),
     db = require('../models'),
     router = express.Router();
 
-var redirectIfUserLoggedIn = (req, res, next) => {
-  if (req.session.user) {
-    return res.redirect('/');
-  }
+    // register as user ------------------------------------------------------------
 
-  next();
-};
-
-router.get('/register', redirectIfUserLoggedIn, (req, res) => {
-  if (req.session.user) {
-    res.redirect('/');
-  }
-  
-  res.render('register');
-});
-
-router.post('/register', redirectIfUserLoggedIn, (req, res) => {
-  db.User.create(req.body).then((user) => {
-    req.session.user = user;
-    res.redirect('/');
-  }).catch((error) => {
-    res.render('users/new', { errors: error.errors });
-  });
-});
-
-router.get('/login', redirectIfUserLoggedIn, (req, res) => {
-  res.render('login');
-});
-
-router.post('/login', redirectIfUserLoggedIn, (req, res) => {
-  db.User.findOne({
-    where: {
-      email: req.body.email
-    }
-  }).then((userInDB) => {
-    bcrypt.compare(req.body.password, userInDB.passwordDigest, (error, result) => {
-      if (result) {
-        req.session.user = userInDB;
-        res.redirect('/');
-      } else {
-        res.render('login', { error: { message: 'Password is incorrect' } });
-      }
+    router.get('/register', (req, res) => {
+      res.render('authentication/new');
     });
-  }).catch((error) => {
-    res.render('login', { error: { message: 'User not found in the database' } });
-  });
-});
 
-router.get('/logout', (req, res) => {
-  req.session.user = undefined;
-  res.redirect('/');
-});
+    router.post('/new', (req, res) => {
+      db.User.create(req.body).then((user) => {
+        req.session.user = user;
+        res.redirect('/users');
+      }).catch((error) => {
+        console.log('error occured');
+        console.log(error);
+        res.render('authentication/new', { errors: error.errors });
+      });
+    });
+
+    // login user --------------------------------------------------------------- //
+
+    router.get('/login', (req, res) => {
+      res.render('authentication/login');
+    });
+
+    router.post('/login', (req, res) => {
+      console.log(req.body);
+
+      db.User.findOne({
+        where: {
+          email: req.body.email
+        }
+      }).then((userInDB) => {
+        bcrypt.compare(req.body.password, userInDB.password, (error, result) => {
+          if (result) {
+            req.session.user = userInDB;
+            res.redirect('/users');
+          } else {
+            res.redirect('/authentication/login');
+          }
+        });
+      }).catch((error) => {
+        console.log('error occured');
+        console.log(error);
+        res.redirect('/authentication/login', { errors: error.errors });
+      });
+    });
 
 module.exports = router;
