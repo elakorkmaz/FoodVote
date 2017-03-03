@@ -10,17 +10,17 @@ var requireUser= (req, res, next) => {
   if (req.session.user) {
     next();
   } else {
-    res.redirect('/users');
+    res.redirect('/user');
   }
 };
 
 router.use(requireUser);
 
-// landing page users ----------------------------------------------------------
+// landing page user ----------------------------------------------------------
 
 router.get('/', (req, res) => {
   db.Menu.findAll().then((menus) => {
-    res.render('users/index', { menus: menus, user: req.session.user });
+    res.render('user/index', { menus: menus, user: req.session.user });
     }).catch((error) => {
       res.status(404).end();
   });
@@ -39,7 +39,7 @@ router.post('/menus/:id/votes', (req, res) => {
     userMenu.UserId = user.id;
 
     db.UserMenu.create(userMenu).then(() => {
-        res.redirect('/users');
+        res.redirect('/user');
       });
   });
 });

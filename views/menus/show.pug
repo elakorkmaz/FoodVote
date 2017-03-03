@@ -7,14 +7,14 @@ block content
         img(src= menu.image)
       .col-md-3
         .row
-          h2= menu.title
+          h2(id="menu-title")= menu.title
           hr
         .row
-          form(action="/menus/" + menu.id + "/votes" method="POST")
+          form(action="/menu/" + menu.id + "/votes" method="POST")
             button(type="submit" class="btn btn-link")
-              img(src= "/img/heart.svg.png")
+              img(src= "/img/heart.svg.png" id="heart")
         .row
-          p= ('This menu received ' + voteCount.count + ' votes')
+          p(id="vote-count")= ('This menu received ' + voteCount.count + ' votes')
 
       .col-md-8.offset-md-2
           h4 Ingredients:
