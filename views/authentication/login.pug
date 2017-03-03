@@ -1,0 +1,14 @@
+extends ../application.pug
+
+block content
+  .container
+    .row
+      .col-xs-6.offset-xs-3
+        h2 Login as a user
+        form(action="/authentication/login" method="POST")
+          .form-group
+            input(type="email" name="email" class="form-control" id="user-email" placeholder="email" required=true)
+          .form-group
+            input(type="password" name="password" class="form-control" id="user-password" placeholder="password" required=true)
+          .form-goup.text-xs-right
+            button.btn.btn-success(type="submit") Login

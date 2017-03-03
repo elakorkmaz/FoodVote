@@ -2,15 +2,12 @@ extends application.pug
 
 block content
 
-  .container
-    .row
-      .col-lg-6.offset-lg-3
-        h1(align="center") Welcome to FoodVote!
-    .row
-      .col-lg-6.offset-lg-3
-        a(href='/users/login')
-          button.btn.btn-info(type='button') Log in
-        a(href='/users/new')
-          button.btn.btn-info(type='button') Register
-  .container
-    .row
+  .container(id="landing-page" class="col-md-6 offset-md-3")
+      .row
+        .col-md-8.offset-md-2
+          h1(id="landing-text") Welcome to FoodVote
+      .row
+        .col-md-4.offset-md-2
+          a(class="btn btn-outline-success btn-lg btn-block" id="landing-button" href='/authentication/login') Log in
+        .col-md-4
+          a(class="btn btn-outline-success btn-lg btn-block" id="landing-button" href='/authentication/register') Register
