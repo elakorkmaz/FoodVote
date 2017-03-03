@@ -1,5 +1,5 @@
 {
-  "name": "FoodVote",
+  "name": "food-vote",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -40,8 +40,17 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "repository": {
-    "url": "git@github.com:elakorkmaz/FoodVote.git",
+    "url": "git+ssh://git@github.com/elakorkmaz/food-vote.git",
     "type": "git"
   },
-  "author": "marco <marcoflaco@gmail.com>"
+  "author": "ela korkmaz",
+  "description": "FoodVote is an app that makes it possible for people to choose what they want to eat for lunch at work. People can register with the company that they work for. The company adds all possible lunches for the week to the website and workers can then vote for the lunches that they prefer. This way the company can save money, time and waste, and people get the lunch they really want.",
+  "bugs": {
+    "url": "https://github.com/elakorkmaz/food-vote/issues"
+  },
+  "homepage": "https://github.com/elakorkmaz/food-vote#readme",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {}
 }
