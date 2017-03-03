@@ -15,6 +15,8 @@ var port = process.env.PORT || 3000;
 var db = require('./models'),
     assets = require('./config/assets');
 
+var client = redis.createClient();
+
 var app = express();
 
 const adminRoutes = require('./routes/admin'),
@@ -27,10 +29,14 @@ app.use(compression());
 
 app.use(express.static('public', { maxAge: '1y' }));
 
+client.on('connect', function() {
+    console.log('connected');
+});
+
 app.use(session({
     secret: 'cookie',
     // create new redis store.
-    store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+    store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
     saveUninitialized: false,
     resave: false
 }));
