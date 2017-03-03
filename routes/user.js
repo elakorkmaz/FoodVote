@@ -2,19 +2,19 @@ var express = require('express'),
     db = require('../models'),
     router = express.Router();
 
-var requireUser= (req, res, next) => {
-  if (req.path === '/') {
-    return next();
-  }
-
-  if (req.session.user) {
-    next();
-  } else {
-    res.redirect('/user');
-  }
-};
-
-router.use(requireUser);
+// var requireUser= (req, res, next) => {
+//   if (req.path === '/') {
+//     return next();
+//   }
+//
+//   if (req.session.user) {
+//     next();
+//   } else {
+//     res.redirect('/user');
+//   }
+// };
+//
+// router.use(requireUser);
 
 // landing page user ----------------------------------------------------------
 
