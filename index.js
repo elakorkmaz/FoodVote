@@ -7,6 +7,8 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       session = require('express-session');
 
+var port = process.env.PORT || 3000;
+
 var db = require('./models'),
     assets = require('./config/assets');
 
@@ -109,8 +111,8 @@ app.post('/menus/:id/votes', (req, res) => {
 // starting server ---------------------------------------------------------- //
 
 db.sequelize.sync().then(() => {
-  app.listen(3000, () => {
-    console.log('server is now running on port 3000');
+  app.listen(port, () => {
+    console.log('server is now running on port ' + port);
     displayRoutes(app);
   });
 });
