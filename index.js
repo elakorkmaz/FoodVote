@@ -11,7 +11,7 @@ const express = require('express'),
 var port = process.env.PORT || 3000;
 
 var db = require('./models'),
-    assets = require('./config/assets');
+    assets = require('./config/assets.json');
 
 var app = express();
 
