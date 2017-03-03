@@ -5,7 +5,8 @@ const express = require('express'),
       pug = require('pug'),
       methodOverride = require('method-override'),
       bodyParser = require('body-parser'),
-      session = require('express-session');
+      session = require('express-session'),
+      bcrypt = require('bcrypt');
 
 var db = require('./models'),
     assets = require('./config/assets');
@@ -13,21 +14,25 @@ var db = require('./models'),
 var app = express();
 
 const adminRoutes = require('./routes/admin'),
+      userRoutes = require('./routes/user'),
       authenticationRoutes = require('./routes/authentication');
 
 app.set('view engine', 'pug');
 
-app.use(morgan('dev'));
-
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(compression());
 
 app.use(express.static('public', { maxAge: '1y' }));
 
-app.use('/admin', adminRoutes);
+app.use(session({
+  name: 'session-cookie',
+  secret: 'our secret key',
+  resave: true,
+  saveUninitialized: true
+}));
 
-app.use(compression());
+app.use(morgan('dev'));
 
-app.use(session({ secret: 'secret key'}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(methodOverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -37,23 +42,16 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
+app.use('/admin', adminRoutes);
+app.use('/user', userRoutes);
+app.use('/authentication', authenticationRoutes);
+
 app.locals.assets = assets;
 
 // landing page general --------------------------------------------------------
 
 app.get('/', (req, res) => {
   res.render('index');
-});
-
-
-// landing page users ----------------------------------------------------------
-
-app.get('/users', (req, res) => {
-  db.Menu.findAll().then((menus) => {
-    res.render('users/index', { menus: menus, user: req.session.user });
-    }).catch((error) => {
-      res.status(404).end();
-  });
 });
 
 // menu pages ------------------------------------------------------------------
@@ -71,38 +69,6 @@ app.get('/menus/:slug', (req, res) => {
     }).then((voteCount) => {
       res.render('menus/show', { menu: menu, voteCount: voteCount, user: req.session.user });
     });
-  });
-});
-
-// register as user ------------------------------------------------------------
-
-app.get('/users/new', (req, res) => {
-  res.render('users/new');
-});
-
-
-// login as user ---------------------------------------------------------------
-
-app.get('/users/login', (req, res) => {
-  res.render('users/login');
-});
-
-// posting a vote --------------------------------------------------------------
-
-app.post('/menus/:id/votes', (req, res) => {
-  db.Menu.findById(req.params.id).then((menu) => {
-    var userMenu = req.body;
-    userMenu.MenuId = menu.id;
-  });
-
-  db.User.findById(req.session.user.id).then((user) => {
-    var userMenu = req.body;
-    userMenu.UserId = user.id;
-
-    db.UserMenu.create(userMenu).then(() => {
-        res.redirect('users/index');
-      });
-    res.redirect('users/index');
   });
 });
 

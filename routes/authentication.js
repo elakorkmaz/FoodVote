@@ -3,57 +3,49 @@ var express = require('express'),
     db = require('../models'),
     router = express.Router();
 
-var redirectIfUserLoggedIn = (req, res, next) => {
-  if (req.session.user) {
-    return res.redirect('/');
-  }
+// register as user ------------------------------------------------------------
 
-  next();
-};
-
-router.get('/register', redirectIfUserLoggedIn, (req, res) => {
-  if (req.session.user) {
-    res.redirect('/');
-  }
-  
-  res.render('register');
+router.get('/register', (req, res) => {
+  res.render('authentication/new');
 });
 
-router.post('/register', redirectIfUserLoggedIn, (req, res) => {
+router.post('/new', (req, res) => {
   db.User.create(req.body).then((user) => {
+    console.log(req.body);
     req.session.user = user;
-    res.redirect('/');
+    res.redirect('/user');
   }).catch((error) => {
-    res.render('users/new', { errors: error.errors });
+    console.log('error occured');
+    console.log(error);
+    res.render('authentication/new', { errors: error.errors });
   });
 });
 
-router.get('/login', redirectIfUserLoggedIn, (req, res) => {
-  res.render('login');
+// login user --------------------------------------------------------------- //
+
+router.get('/login', (req, res) => {
+  res.render('authentication/login');
 });
 
-router.post('/login', redirectIfUserLoggedIn, (req, res) => {
+router.post('/login', (req, res) => {
+  console.log(req.body);
+
   db.User.findOne({
     where: {
       email: req.body.email
     }
   }).then((userInDB) => {
-    bcrypt.compare(req.body.password, userInDB.passwordDigest, (error, result) => {
-      if (result) {
+    if (userInDB.password === req.body.password) {
         req.session.user = userInDB;
-        res.redirect('/');
+        res.redirect('/user');
       } else {
-        res.render('login', { error: { message: 'Password is incorrect' } });
+        res.redirect('/authentication/login');
       }
-    });
-  }).catch((error) => {
-    res.render('login', { error: { message: 'User not found in the database' } });
+    }).catch((error) => {
+    console.log('error occured');
+    console.log(error);
+    res.redirect('/authentication/login', { errors: error.errors });
   });
-});
-
-router.get('/logout', (req, res) => {
-  req.session.user = undefined;
-  res.redirect('/');
 });
 
 module.exports = router;

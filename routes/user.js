@@ -1,59 +1,55 @@
 var express = require('express'),
-    bcrypt = require('bcrypt'),
     db = require('../models'),
     router = express.Router();
 
-// register a user ---------------------------------------------------------- //
-
-router.get('/register', (req, res) => {
-  if (req.session.user) {
-    res.redirect('/');
+var requireUser= (req, res, next) => {
+  if (req.path === '/') {
+    return next();
   }
-  res.render('users/new');
-});
 
-router.post('/register', (req, res) => {
-  db.User.create(req.body).then((user) => {
-    req.session.user = user;
-    res.redirect('/');
-  }).catch((error) => {
-    console.log('error occured');
-    console.log(error);
-    res.render('users/new', { errors: error.errors });
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect('/user');
+  }
+};
+
+router.use(requireUser);
+
+// landing page user ----------------------------------------------------------
+
+router.get('/', (req, res) => {
+  db.Menu.findAll().then((menus) => {
+    res.render('user/index', { menus: menus, user: req.session.user });
+    }).catch((error) => {
+      res.status(404).end();
   });
 });
 
-// login user --------------------------------------------------------------- //
+// posting a vote --------------------------------------------------------------
 
-router.get('/users/login', (req, res) => {
-  res.render('users/login');
-});
+router.post('/menus/:id/votes', (req, res) => {
+  db.Menu.findById(req.params.id).then((menu) => {
+    var userMenu = req.body;
+    userMenu.MenuId = menu.id;
+  });
 
-router.post('/users/login', (req, res) => {
-  console.log(req.body);
+  db.User.findById(req.session.user.id).then((user) => {
+    var userMenu = req.body;
+    userMenu.UserId = user.id;
 
-  db.User.findOne({
-    where: {
-      email: req.body.email
-    }
-  }).then((userInDB) => {
-    bcrypt.compare(req.body.password, userInDB.password, (error, result) => {
-      if (result) {
-        req.session.user = userInDB;
-        res.redirect('/');
-      } else {
-        res.redirect('/user-authentication/login');
-      }
-    });
-  }).catch((error) => {
-    console.log('error occured');
-    console.log(error);
-    res.redirect('/authentication/login');
+    db.UserMenu.create(userMenu).then(() => {
+        res.redirect('/user');
+      });
   });
 });
 
-// voting on a menu --------------------------------------------------------- //
+// log out ---------------------------------------------------------------------
 
+router.get('/logout', (req, res) => {
+  req.session.user = undefined;
+  res.redirect('/');
+});
 
 // -------------------------------------------------------------------------- //
 

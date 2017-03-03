@@ -11,7 +11,7 @@ html
     // navbar
     nav.navbar.navbar-lg
 
-      a(class="navbar-brand" href="/users")
+      a(class="navbar-brand" href="/")
         h1 FoodVote
 
       .nav.navbar-nav.float-xs-right
@@ -27,7 +27,11 @@ html
         .container
           nav.navbar.navbar-fixed-bottom.navbar-lg
             .container
-              p= 'You are logged in as ' + user.name + ' ' + user.surname
+              .row
+                .col-lg-6.offset-lg-3
+                  p= 'You are logged in as ' + user.name + ' ' + user.surname
+                  a(href="/user/logout")
+                    p= 'Log out'
 
     script(src="/js/" + assets['vendor.js'])
     script(src="/js/" + assets['application.js'])
