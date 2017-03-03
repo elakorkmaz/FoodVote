@@ -7,12 +7,12 @@ block content
         h2 Register as a user
         form(action="/authentication/new" method="POST")
           .form-group
-            input(type="text" name="name" class="form-control" placeholder="Name" required=true)
+            input(type="text" name="name" class="form-control" id="user-name" placeholder="Name" required=true)
           .form-group
-            input(type="text" name="surname" class="form-control" placeholder="Surname" required=true)
+            input(type="text" name="surname" class="form-control" id="user-surname" placeholder="Surname" required=true)
           .form-group
-            input(type="email" name="email" class="form-control" placeholder="email" required=true)
+            input(type="email" name="email" class="form-control" id="user-email" placeholder="email" required=true)
           .form-group
-            input(type="password" name="password" class="form-control" placeholder="password" required=true)
+            input(type="password" name="password" class="form-control" id="user-password" placeholder="password" required=true)
           .form-goup.text-xs-right
             button(type="submit" class="btn btn-succes") Register

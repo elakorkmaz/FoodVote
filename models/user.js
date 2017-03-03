@@ -11,10 +11,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
     },
     password: {
-      type: DataTypes.VIRTUAL,
-      set: function(password) {
-        this.setDataValue('passwordDigest', bcrypt.hashSync(password, 10));
-      }
+      type: DataTypes.STRING,
+      // set: function(password) {
+      //   this.setDataValue('passwordDigest', bcrypt.hashSync(password, 10));
+      // }
     },
     fullName: {
       type: DataTypes.VIRTUAL,

@@ -17,10 +17,6 @@ const adminRoutes = require('./routes/admin'),
       userRoutes = require('./routes/user'),
       authenticationRoutes = require('./routes/authentication');
 
-app.use('/admin', adminRoutes);
-app.use('/user', userRoutes);
-app.use('/authentication', authenticationRoutes);
-
 app.set('view engine', 'pug');
 
 app.use(compression());
@@ -45,6 +41,10 @@ app.use(methodOverride((req, res) => {
     return method;
   }})
 );
+
+app.use('/admin', adminRoutes);
+app.use('/user', userRoutes);
+app.use('/authentication', authenticationRoutes);
 
 app.locals.assets = assets;
 
