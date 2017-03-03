@@ -2,12 +2,12 @@ extends application.pug
 
 block content
 
-  .container(id="landing-page" class="col-md-8 offset-md-2")
+  .container(id="landing-page" class="col-md-6 offset-md-3")
       .row
-        .col-md-6.offset-md-3
-          h1(align="center" id="landing-text") Welcome to FoodVote!
+        .col-md-8.offset-md-2
+          h1(id="landing-text") Welcome to FoodVote
       .row
-        .col-md-3.offset-md-3
-          a(class="btn btn-outline-success btn-lg btn-block" href='/authentication/login') Log in
-        .col-md-3
-          a(class="btn btn-outline-success btn-lg btn-block" href='/authentication/register') Register
+        .col-md-4.offset-md-2
+          a(class="btn btn-outline-success btn-lg btn-block" id="landing-button" href='/authentication/login') Log in
+        .col-md-4
+          a(class="btn btn-outline-success btn-lg btn-block" id="landing-button" href='/authentication/register') Register

@@ -15,24 +15,36 @@ body {
 }
 
 .navbar-brand h1:hover {
-  color: green;
+  color: #5cb85c;
 }
 
 .nav.navbar-nav.float-xs-right p {
   color: white;
   font-size: 18px;
+  margin-top: 10%;
+}
+
+@media only screen and (max-device-width: 480px) {
+  .nav.navbar-nav.float-xs-right p {
+      display: none;
+  }
 }
 
 #landing-page {
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.3);
-  height: 50%;
-  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-75%);
+  border-radius: 10px;
+  height: auto;
+  padding: 25px;
 }
 
 #landing-text {
   color: white;
-  font-weight: 400;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 25px;
 }
 
 #user-login {
