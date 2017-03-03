@@ -6,6 +6,8 @@ const express = require('express'),
       methodOverride = require('method-override'),
       bodyParser = require('body-parser'),
       session = require('express-session'),
+      redis = require('redis'),
+      redisStore = require('connect-redis')(session),
       bcrypt = require('bcrypt');
 
 var port = process.env.PORT || 3000;
@@ -26,10 +28,11 @@ app.use(compression());
 app.use(express.static('public', { maxAge: '1y' }));
 
 app.use(session({
-  name: 'session-cookie',
-  secret: 'our secret key',
-  resave: true,
-  saveUninitialized: true
+    secret: 'cookie',
+    // create new redis store.
+    store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+    saveUninitialized: false,
+    resave: false
 }));
 
 app.use(morgan('dev'));
