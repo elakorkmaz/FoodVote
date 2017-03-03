@@ -6,6 +6,19 @@ body {
   background-image: url("/img/food.png");
   background-repeat: no-repeat;
   background-size: cover;
+  color: white;
+}
+
+body p {
+  color: white;
+}
+
+#ingredients {
+  color: white;
+}
+
+#menu-title {
+  color: white;
 }
 
 .navbar-brand h1 {
@@ -19,28 +32,35 @@ body {
 }
 
 .nav.navbar-nav.float-xs-right p {
-  color: white;
   font-size: 18px;
-  margin-top: 10%;
+  text-align: right;
+}
+.nav.navbar-nav.float-xs-right a p {
+  color: #5cb85c;
+  text-decoration: none;
 }
 
 @media only screen and (max-device-width: 480px) {
-  .nav.navbar-nav.float-xs-right p {
-      display: none;
+  #motto {
+    display: none;
   }
 }
 
-#landing-page {
+.container {
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
-  top: 50%;
-  transform: translateY(-75%);
   border-radius: 10px;
-  height: auto;
   padding: 25px;
+  margin: 0 auto;
+  margin: 15px;
 }
 
-#landing-text {
+#landing-page {
+  top: 20%;
+  bottom: 90%;
+}
+
+#header {
   color: white;
   font-weight: 200;
   text-align: center;
@@ -61,4 +81,17 @@ body {
 
 #heart {
   width: 100%;
+}
+
+.carousel-item img {
+  width: 100%;
+}
+
+#show-img {
+  height: 100%;
+}
+
+
+nav.navbar.navbar-fixed-bottom.navbar-lg {
+  position: fixed;
 }

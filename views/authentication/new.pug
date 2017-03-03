@@ -1,10 +1,10 @@
 extends ../application.pug
 
 block content
-  .container
+  .container(class="col-md-6 offset-md-3")
     .row
-      .col-xs-6.offset-xs-3
-        h2 Register as a user
+      .col-md-8.offset-md-2
+        h2(id="header") Register as a user
         form(action="/authentication/new" method="POST")
           .form-group
             input(type="text" name="name" class="form-control" id="user-name" placeholder="Name" required=true)

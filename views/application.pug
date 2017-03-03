@@ -14,23 +14,15 @@ html
         h1 FoodVote
 
       .nav.navbar-nav.float-xs-right
-        p You are what you eat!
+        p(id="motto") You are what you eat!
+        if user
+          p= 'You are logged in as ' + user.name + ' ' + user.surname
+          a(href="/user/logout")
+            p= 'Log out'
 
 
     // content
     block content
-
-    // footer
-    if user
-      .row
-        .container
-          nav.navbar.navbar-fixed-bottom.navbar-lg
-            .container
-              .row
-                .col-lg-6.offset-lg-3
-                  p= 'You are logged in as ' + user.name + ' ' + user.surname
-                  a(href="/user/logout")
-                    p= 'Log out'
 
     script(src="/js/" + assets['vendor.js'])
     script(src="/js/" + assets['application.js'])

@@ -1,10 +1,9 @@
 extends ../application.pug
 
 block content
-  .container
-    .row
+  .container(class="col-md-8 offset-md-2")
       .col-md-5.offset-md-2
-        img(src= menu.image)
+        img-fluid(id="show-img" src= menu.image)
       .col-md-3
         .row
           h2(id="menu-title")= menu.title
@@ -17,5 +16,5 @@ block content
           p(id="vote-count")= ('This menu received ' + voteCount.count + ' votes')
 
       .col-md-8.offset-md-2
-          h4 Ingredients:
+          h4(id="ingredients") Ingredients:
           p= menu.info
