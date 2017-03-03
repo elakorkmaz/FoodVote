@@ -1,3 +1,40 @@
+a:link {
+    text-decoration: none;
+}
+
+body {
+  background-image: url("/img/food.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.navbar-brand h1 {
+  color: white;
+  font-weight: bold;
+  font-size: 56px;
+}
+
+.navbar-brand h1:hover {
+  color: green;
+}
+
+.nav.navbar-nav.float-xs-right p {
+  color: white;
+  font-size: 18px;
+}
+
+#landing-page {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 50%;
+  border-radius: 5px;
+}
+
+#landing-text {
+  color: white;
+  font-weight: 400;
+}
+
 #user-login {
   margin: auto 0;
 }
