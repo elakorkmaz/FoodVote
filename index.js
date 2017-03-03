@@ -7,8 +7,7 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       session = require('express-session'),
       redis = require('redis'),
-      redisStore = require('connect-redis')(session),
-      bcrypt = require('bcrypt');
+      redisStore = require('connect-redis')(session);
 
 var port = process.env.PORT || 3000;
 
