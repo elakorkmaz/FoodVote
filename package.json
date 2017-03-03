@@ -1,6 +1,10 @@
 {
   "name": "food-vote",
   "version": "1.0.1",
+  "engines": {
+    "node": "7.6.0",
+    "npm": "4.1.2"
+  },
   "main": "index.js",
   "license": "MIT",
   "scripts": {
