@@ -2,9 +2,9 @@ extends ../application.pug
 
 block content
   .container(class="col-md-8 offset-md-2")
-      .col-md-5.offset-md-2
-        img-fluid(id="show-img" src= menu.image)
-      .col-md-3
+      .col-md-8
+        img(id="index-img" src= menu.image)
+      .col-md-4
         .row
           h2(id="menu-title")= menu.title
           hr
@@ -14,7 +14,6 @@ block content
               img(src= "/img/heart.svg.png" id="heart")
         .row
           p(id="vote-count")= ('This menu received ' + voteCount.count + ' votes')
-
-      .col-md-8.offset-md-2
+        .row
           h4(id="ingredients") Ingredients:
-          p= menu.info
+          p(id="ingredients")= menu.info

@@ -13,8 +13,15 @@ body p {
   color: white;
 }
 
+#index-title {
+  color: white;
+  text-align: center;
+  font-weight: 200;
+}
+
 #ingredients {
   color: white;
+  text-align: center;
 }
 
 #menu-title {
@@ -53,11 +60,9 @@ body p {
   padding: 25px;
   margin: 0 auto;
   margin: 15px;
-}
-
-#landing-page {
-  top: 20%;
-  bottom: 90%;
+  width: 100%;
+  top: 35%;
+  transform: translateY(-50%);
 }
 
 #header {
@@ -83,14 +88,19 @@ body p {
   width: 100%;
 }
 
-.carousel-item img {
+#index-row {
+  margin-top: 15px;
+}
+
+#index-button {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#index-img {
   width: 100%;
 }
-
-#show-img {
-  height: 100%;
-}
-
 
 nav.navbar.navbar-fixed-bottom.navbar-lg {
   position: fixed;

@@ -2,31 +2,18 @@ extends ../application.pug
 
 block content
 
-  .container(class="col-md-6 offset-md-3" id="show-page")
+  .container(class="col-md-10 offset-md-1" id="show-page")
     .row
-      .col-lg-12
+      .col-md-12
         h1(id="header") Choices of the week
     .row
-      .col-lg-12
-        #carousel-example-generic.carousel.slide(data-ride='carousel')
-          ol.carousel-indicators
-            each menu in menus
-              li(data-target='#carousel-example-generic')
-          .carousel-inner(role='listbox')
-            each menu in menus
-              .carousel-item
-                img(src= menu.image alt='slide')
-                .carousel-caption
-                  .row
-                    .col-lg-6
-                      a(href='/menus/' + menu.slug)
-                        button(class="btn btn-success") More info
-                    .col-lg-6
-                      form(action="/menus/" + menu.id + "/votes" method="POST")
-                        button(class="btn btn-success") Vote
-          a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
-            span.icon-prev(aria-hidden='true')
-            span.sr-only Previous
-          a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
-            span.icon-next(aria-hidden='true')
-            span.sr-only Next
+      .col-md-12
+        each menu in menus
+          .col-md-4(id="index-menu")
+            h4(id="index-title")=menu.title
+            img(id="index-img" src=menu.image alt='slide')
+            .row(id="index-row")
+              .col-md-6
+                a(href='/menus/' + menu.slug id="index-button" class="btn btn-outline-success") More info
+              .col-md-6
+                form(action="/menus/" + menu.id + "/votes" method="POST" id="index-button" class="btn btn-outline-success") Vote
