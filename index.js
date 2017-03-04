@@ -46,17 +46,16 @@ client.on('connect', function() {
     console.log('connected');
 });
 
-app.use(session({
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.session({
     secret: 'cookie',
     // create new redis store.
     store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
     saveUninitialized: false,
     resave: false
 }));
-
-app.use(morgan('dev'));
-
-app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(methodOverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
