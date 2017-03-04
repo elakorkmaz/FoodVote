@@ -52,10 +52,10 @@ app.use('/user', userRoutes);
 app.use('/authentication', authenticationRoutes);
 
 app.use(morgan('dev'));
-app.use(cookieParser());
+app.use(express.cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(session({
+app.use(express.session({
     secret: 'cookie',
     // create new redis store.
     store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
