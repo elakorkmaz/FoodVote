@@ -5,6 +5,7 @@ const express = require('express'),
       pug = require('pug'),
       methodOverride = require('method-override'),
       bodyParser = require('body-parser'),
+      cookieParser = require('cookie-parser'),
       session = require('express-session'),
       redis = require('redis'),
       redisStore = require('connect-redis')(session);
@@ -47,6 +48,7 @@ client.on('connect', function() {
 });
 
 app.use(morgan('dev'));
+server.use(express.cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(session({
