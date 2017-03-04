@@ -16,7 +16,7 @@
     "bcrypt": "^1.0.2",
     "body-parser": "^1.15.2",
     "bootstrap": "4.0.0-alpha.5",
-    "browserify": "^13.1.1",
+    "browserify": "^13.3.0",
     "compression": "^1.6.2",
     "connect-assets": "^5.4.0",
     "connect-redis": "^3.2.0",
