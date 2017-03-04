@@ -49,7 +49,7 @@ client.on('connect', function() {
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.session({
+app.use(session({
     secret: 'cookie',
     // create new redis store.
     store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
