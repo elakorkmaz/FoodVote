@@ -16,7 +16,7 @@ router.post('/new', (req, res) => {
   }).catch((error) => {
     console.log('error occured');
     console.log(error);
-    res.render('authentication/new', { errors: error.errors, user: req.session.user });
+    res.render('authentication/new', { errors: error.errors });
   });
 });
 
@@ -43,7 +43,7 @@ router.post('/login', (req, res) => {
     }).catch((error) => {
     console.log('error occured');
     console.log(error);
-    res.redirect('/authentication/login', { errors: error.errors, user: req.session.user });
+    res.redirect('/authentication/login', { errors: error.errors });
   });
 });
 

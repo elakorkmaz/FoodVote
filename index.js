@@ -47,6 +47,10 @@ client.on('connect', function() {
     console.log('connected');
 });
 
+app.use('/admin', adminRoutes);
+app.use('/user', userRoutes);
+app.use('/authentication', authenticationRoutes);
+
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -66,10 +70,6 @@ app.use(methodOverride((req, res) => {
     return method;
   }})
 );
-
-app.use('/admin', adminRoutes);
-app.use('/user', userRoutes);
-app.use('/authentication', authenticationRoutes);
 
 app.locals.assets = assets;
 
