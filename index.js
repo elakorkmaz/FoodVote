@@ -48,7 +48,7 @@ client.on('connect', function() {
 });
 
 app.use(morgan('dev'));
-server.use(express.cookieParser());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(session({
