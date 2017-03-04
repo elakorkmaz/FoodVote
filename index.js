@@ -71,12 +71,6 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
-app.dynamicHelpers({
-  session: function(req, res){
-    return req.session;
-  }
-});
-
 app.locals.assets = assets;
 
 // landing page general --------------------------------------------------------
