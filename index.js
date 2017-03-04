@@ -14,23 +14,23 @@ var port = process.env.PORT || 3000;
 var db = require('./models'),
     assets = require('./config/assets');
 
-// var client = redis.createClient();
+var client = redis.createClient();
 
 var app = express();
 
 var pg = require('pg');
 
-// pg.defaults.ssl = true;
-// pg.connect(process.env.DATABASE_URL, function(err, client) {
-//   if (err) throw err;
-//   console.log('Connected to postgres! Getting schemas...');
-//
-//   client
-//     .query('SELECT table_schema,table_name FROM information_schema.tables;')
-//     .on('row', function(row) {
-//       console.log(JSON.stringify(row));
-//     });
-// });
+pg.defaults.ssl = true;
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+  if (err) throw err;
+  console.log('Connected to postgres! Getting schemas...');
+
+  client
+    .query('SELECT table_schema,table_name FROM information_schema.tables;')
+    .on('row', function(row) {
+      console.log(JSON.stringify(row));
+    });
+});
 
 const adminRoutes = require('./routes/admin'),
       userRoutes = require('./routes/user'),
@@ -42,17 +42,17 @@ app.use(compression());
 
 app.use(express.static('public', { maxAge: '1y' }));
 
-// client.on('connect', function() {
-//     console.log('connected');
-// });
+client.on('connect', function() {
+    console.log('connected');
+});
 
-// app.use(session({
-//     secret: 'cookie',
-//     // create new redis store.
-//     store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
-//     saveUninitialized: false,
-//     resave: false
-// }));
+app.use(session({
+    secret: 'cookie',
+    // create new redis store.
+    store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
+    saveUninitialized: false,
+    resave: false
+}));
 
 app.use(morgan('dev'));
 
