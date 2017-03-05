@@ -48,6 +48,18 @@ client.on('connect', function() {
     console.log('connected');
 });
 
+app.use(cookieParser());
+
+app.use(session({
+    cookieName: 'cookie',
+    secret: 'blabla',
+    path : '/',
+    // create new redis store.
+    store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
+    saveUninitialized: false,
+    resave: false
+}));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(methodOverride((req, res) => {
@@ -57,16 +69,6 @@ app.use(methodOverride((req, res) => {
     return method;
   }})
 );
-
-app.use(session({
-    cookieName: 'cookie',
-    secret: 'blabla',
-    path : '/', 
-    // create new redis store.
-    store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
-    saveUninitialized: false,
-    resave: false
-}));
 
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
