@@ -5,6 +5,7 @@ const express = require('express'),
       pug = require('pug'),
       methodOverride = require('method-override'),
       bodyParser = require('body-parser'),
+      cookieParser = require('cookie-parser'),
       session = require('express-session'),
       redis = require('redis'),
       redisStore = require('connect-redis')(session);
