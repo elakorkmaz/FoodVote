@@ -61,6 +61,7 @@ app.use(methodOverride((req, res) => {
 app.use(session({
     cookieName: 'cookie',
     secret: 'blabla',
+    path : '/', 
     // create new redis store.
     store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
     saveUninitialized: false,
