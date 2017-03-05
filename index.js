@@ -50,6 +50,14 @@ client.on('connect', function() {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(methodOverride((req, res) => {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }})
+);
+
 app.use(session({
     cookieName: 'cookie',
     secret: 'blabla',
@@ -58,14 +66,6 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 }));
-
-app.use(methodOverride((req, res) => {
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    var method = req.body._method;
-    delete req.body._method;
-    return method;
-  }})
-);
 
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
