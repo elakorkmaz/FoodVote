@@ -21,9 +21,12 @@ const adminRoutes = require('./routes/admin'),
       userRoutes = require('./routes/user'),
       authenticationRoutes = require('./routes/authentication');
 
-var client = redis.createClient();
-
 var pg = require('pg');
+
+var conString = DATABASE_URL;
+
+var client = new pg.Client(conString);
+client.connect();
 
 pg.defaults.ssl = true;
 pg.connect(process.env.DATABASE_URL, function(err, client) {
@@ -41,24 +44,20 @@ app.set('view engine', 'pug');
 
 app.use(compression());
 
-app.use(morgan('dev'));
-
 app.use(express.static('public', { maxAge: '1y' }));
 
-client.on('connect', function() {
-    console.log('connected');
-});
+// client.on('connect', function() {
+//     console.log('connected');
+// });
 
-app.use(cookieParser());
+app.use(morgan('dev'));
+app.use(cookieParser('bla'));
 
 app.use(session({
-    cookieName: 'cookie',
-    secret: 'blabla',
-    path : '/',
-    // create new redis store.
-    store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
-    saveUninitialized: false,
-    resave: false
+  name: 'cookie',
+  secret: 'bla',
+  resave: true,
+  saveUninitialized: true
 }));
 
 app.use(bodyParser.urlencoded({ extended: false }));

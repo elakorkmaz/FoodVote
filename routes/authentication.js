@@ -11,7 +11,7 @@ router.get('/register', (req, res) => {
 router.post('/new', (req, res) => {
   db.User.create(req.body).then((user) => {
     req.session.user = user;
-    res.redirect('/');
+    res.redirect('/user');
   }).catch((error) => {
     console.log(error);
     res.render('authentication/new', { errors: error.errors });
