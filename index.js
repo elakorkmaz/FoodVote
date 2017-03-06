@@ -5,10 +5,7 @@ const express = require('express'),
       pug = require('pug'),
       methodOverride = require('method-override'),
       bodyParser = require('body-parser'),
-      cookieParser = require('cookie-parser'),
-      session = require('express-session'),
-      redis = require('redis'),
-      redisStore = require('connect-redis')(session);
+      session = require('express-session');
 
 var port = process.env.PORT || 3000;
 
@@ -51,7 +48,6 @@ app.use(express.static('public', { maxAge: '1y' }));
 // });
 
 app.use(morgan('dev'));
-app.use(cookieParser('bla'));
 
 app.use(session({
   name: 'cookie',
