@@ -20,7 +20,7 @@ var express = require('express'),
 
 router.get('/', (req, res) => {
   db.Menu.findAll().then((menus) => {
-    res.render('user/index', { menus: menus });
+    res.render('user/index', { menus: menus, user: req.session.user });
     }).catch((error) => {
       res.status(404).end();
   });
