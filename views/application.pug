@@ -16,7 +16,7 @@ html
       .nav.navbar-nav.float-xs-right
         p(id="motto") You are what you eat!
         if user
-          .row
+          .col-md-6.offset-md-6
             p= 'You are logged in as ' + user.name + ' ' + user.surname
             form(action="/logout" method="POST")
               input(type="hidden" name="_method" value="POST")
