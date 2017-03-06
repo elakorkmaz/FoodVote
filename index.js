@@ -14,8 +14,7 @@ var db = require('./models'),
 
 var app = express();
 
-const adminRoutes = require('./routes/admin'),
-      userRoutes = require('./routes/user'),
+const userRoutes = require('./routes/user'),
       authenticationRoutes = require('./routes/authentication');
 
 var pg = require('pg');
@@ -62,7 +61,6 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
-app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
 app.use('/authentication', authenticationRoutes);
 
