@@ -56,15 +56,15 @@ router.get('/logout', (req, res) => {
 
 // delete account --------------------------------------------------------------
 
-router.delete('/:id', (req, res) => {
-  db.User.destroy({
-    where: {
-      id: req.body.id
-    }
-  }).then(() => {
-    res.redirect('/');
-  });
-});
+// router.delete('/:id', (req, res) => {
+//   db.User.destroy({
+//     where: {
+//       id: req.body.id
+//     }
+//   }).then(() => {
+//     res.redirect('/');
+//   });
+// });
 
 // -------------------------------------------------------------------------- //
 
