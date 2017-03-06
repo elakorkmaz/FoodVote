@@ -19,7 +19,7 @@ html
           .row
             .col-md-12
               p= 'You are logged in as ' + user.name + ' ' + user.surname
-              a(href="/logout")
+              a(href="/user/logout")
                 p(class="btn btn-warning")= 'Log out'
               form(action="/user/" + user.id method="POST")
                 input(type="hidden" name="_method" value="DELETE")
