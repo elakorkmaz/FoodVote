@@ -41,6 +41,9 @@ router.post('/menus/:id/votes', (req, res) => {
     db.UserMenu.create(userMenu).then(() => {
         res.redirect('/user');
       });
+  }).catch((error) => {
+    console.log(error);
+    res.redirect('/user', { errors: error.errors });
   });
 });
 
