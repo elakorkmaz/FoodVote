@@ -18,9 +18,8 @@ html
         if user
           .col-md-6.offset-md-6
             p= 'You are logged in as ' + user.name + ' ' + user.surname
-            form(action="/logout" method="POST")
-              input(type="hidden" name="_method" value="POST")
-              button(type="submit" class="btn btn-warning") Log out
+            a(href="/logout")
+              p= 'Log out'  
             form(action="/user/" + user.id method="POST")
               input(type="hidden" name="_method" value="DELETE")
               button(type="submit" class="btn btn-danger") Delete account
