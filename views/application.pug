@@ -17,8 +17,10 @@ html
         p(id="motto") You are what you eat!
         if user
           p= 'You are logged in as ' + user.name + ' ' + user.surname
-          a(href="/user/logout")
-            p= 'Log out'
+          form(action="/logout" method="POST")
+            button(type="submit" class="btn btn-outline-warning") Log out
+          form(action="/user/" + user.id method="POST")
+            button(type="submit" class="btn btn-outline-danger") Delete account
 
 
     // content

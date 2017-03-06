@@ -54,6 +54,18 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+// delete account --------------------------------------------------------------
+
+router.delete('/user/:id', (req, res) => {
+  db.User.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(() => {
+    res.redirect('/');
+  });
+});
+
 // -------------------------------------------------------------------------- //
 
 module.exports = router;
