@@ -56,7 +56,7 @@ router.get('/logout', (req, res) => {
 
 // delete account --------------------------------------------------------------
 
-router.delete('/user/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   db.User.destroy({
     where: {
       id: req.params.id
