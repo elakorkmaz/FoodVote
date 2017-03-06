@@ -25,27 +25,23 @@ var conString = process.env.DATABASE_URL;
 var client = new pg.Client(conString);
 client.connect();
 
-pg.defaults.ssl = true;
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-  console.log('Connected to postgres! Getting schemas...');
-
-  client
-    .query('SELECT table_schema,table_name FROM information_schema.tables;')
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-});
+// pg.defaults.ssl = true;
+// pg.connect(process.env.DATABASE_URL, function(err, client) {
+//   if (err) throw err;
+//   console.log('Connected to postgres! Getting schemas...');
+//
+//   client
+//     .query('SELECT table_schema,table_name FROM information_schema.tables;')
+//     .on('row', function(row) {
+//       console.log(JSON.stringify(row));
+//     });
+// });
 
 app.set('view engine', 'pug');
 
 app.use(compression());
 
 app.use(express.static('public', { maxAge: '1y' }));
-
-// client.on('connect', function() {
-//     console.log('connected');
-// });
 
 app.use(morgan('dev'));
 
@@ -82,7 +78,15 @@ app.get('/menus/new', (req, res) => {
   res.render('menus/new');
 });
 
-app.post('admin/menus/new', (req, res) => {
+app.get('/admin/index', (req, res) => {
+  db.Menu.findAll().then((menus) => {
+    res.render('admin/index', { menus: menus });
+    }).catch((error) => {
+      res.status(404).end();
+    });
+});
+
+app.post('/admin/menus/new', (req, res) => {
     db.Menu.create(req.body).then((menu) => {
       req.session.menu = menu;
       res.redirect('/');

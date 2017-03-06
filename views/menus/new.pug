@@ -2,10 +2,10 @@ extends ../application.pug
 
 block content
 
-  .container
+    .container(class="col-md-6 offset-md-3")
       .row
-        .col-xs-8.offset-xs-2
-          h2 Post a new menu
+        .col-md-8.offset-md-2
+          h2(id="header") Post a new menu
           form(action="/admin/menus/new" method="POST")
             .form-group
               label(for="menu-title") Title
