@@ -78,6 +78,20 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/menus/new', (req, res) => {
+  res.render('menus/new');
+});
+
+app.post('admin/menus/new', (req, res) => {
+    db.Menu.create(req.body).then((menu) => {
+      req.session.menu = menu;
+      res.redirect('/');
+    }).catch((error) => {
+      console.log(error);
+      res.render('menus/new', { errors: error.errors });
+    });
+});
+
 // menu pages ------------------------------------------------------------------
 
 app.get('/menus/:slug', (req, res) => {
