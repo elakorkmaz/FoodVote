@@ -16,13 +16,14 @@ html
       .nav.navbar-nav.float-xs-right
         p(id="motto") You are what you eat!
         if user
-          .col-md-6.offset-md-6
-            p= 'You are logged in as ' + user.name + ' ' + user.surname
-            a(href="/logout")
-              p= 'Log out'  
-            form(action="/user/" + user.id method="POST")
-              input(type="hidden" name="_method" value="DELETE")
-              button(type="submit" class="btn btn-danger") Delete account
+          .row
+            .col-md-12
+              p= 'You are logged in as ' + user.name + ' ' + user.surname
+              a(href="/logout")
+                p(class="btn btn-warning")= 'Log out'
+              form(action="/user/" + user.id method="POST")
+                input(type="hidden" name="_method" value="DELETE")
+                button(type="submit" class="btn btn-danger") Delete account
 
 
     // content
