@@ -20,7 +20,7 @@ var express = require('express'),
 
 router.get('/', (req, res) => {
   db.Menu.findAll().then((menus) => {
-    res.render('user/index', { menus: menus, user: req.session.user });
+    res.render('users/index', { menus: menus, user: req.session.user });
     }).catch((error) => {
       res.status(404).end();
   });
@@ -32,6 +32,10 @@ router.post('/menus/:id/votes', (req, res) => {
   db.Menu.findById(req.params.id).then((menu) => {
     var userMenu = req.body;
     userMenu.MenuId = menu.id;
+  }).catch((error) => {
+      console.log('error occured');
+      console.log(error);
+      res.render('users/index', { errors: error.errors });
   });
 
   db.User.findById(req.session.user.id).then((user) => {
@@ -39,11 +43,8 @@ router.post('/menus/:id/votes', (req, res) => {
     userMenu.UserId = user.id;
 
     db.UserMenu.create(userMenu).then(() => {
-        res.redirect('/user');
+        res.redirect('/users');
       });
-  }).catch((error) => {
-    console.log(error);
-    res.redirect('/user', { errors: error.errors });
   });
 });
 

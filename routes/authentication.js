@@ -11,7 +11,7 @@ router.get('/register', (req, res) => {
 router.post('/new', (req, res) => {
   db.User.create(req.body).then((user) => {
     req.session.user = user;
-    res.redirect('/user');
+    res.redirect('/users');
   }).catch((error) => {
     console.log(error);
     res.render('authentication/new', { errors: error.errors });
@@ -34,7 +34,7 @@ router.post('/login', (req, res) => {
   }).then((userInDB) => {
     if (userInDB.password === req.body.password) {
       req.session.user = userInDB;
-      res.redirect('/user');
+      res.redirect('/users');
     } else {
       res.redirect('/authentication/login');
     }

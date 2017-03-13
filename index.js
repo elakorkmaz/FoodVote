@@ -14,44 +14,35 @@ var db = require('./models'),
 
 var app = express();
 
-const userRoutes = require('./routes/user'),
+const userRoutes = require('./routes/users'),
       authenticationRoutes = require('./routes/authentication');
-
-var pg = require('pg');
-
-var conString = process.env.DATABASE_URL;
-
-var client = new pg.Client(conString);
-client.connect();
-
-pg.defaults.ssl = true;
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-  console.log('Connected to postgres! Getting schemas...');
-
-  client
-    .query('SELECT table_schema,table_name FROM information_schema.tables;')
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-});
 
 app.set('view engine', 'pug');
 
-app.use(compression());
+// var pg = require('pg');
+//
+// var conString = process.env.DATABASE_URL;
+//
+// var client = new pg.Client(conString);
+// client.connect();
 
-app.use(express.static('public', { maxAge: '1y' }));
+// pg.defaults.ssl = true;
+// pg.connect(process.env.DATABASE_URL, function(err, client) {
+//   if (err) throw err;
+//   console.log('Connected to postgres! Getting schemas...');
+//
+//   client
+//     .query('SELECT table_schema,table_name FROM information_schema.tables;')
+//     .on('row', function(row) {
+//       console.log(JSON.stringify(row));
+//     });
+// });
 
 app.use(morgan('dev'));
 
-app.use(session({
-  name: 'cookie',
-  secret: 'bla',
-  resave: true,
-  saveUninitialized: true
-}));
-
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(session({ secret: 'bla' }));
 
 app.use(methodOverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -61,7 +52,11 @@ app.use(methodOverride((req, res) => {
   }})
 );
 
-app.use('/user', userRoutes);
+app.use(compression());
+
+app.use(express.static('public', { maxAge: '1y' }));
+
+app.use('/users', userRoutes);
 app.use('/authentication', authenticationRoutes);
 
 app.locals.assets = assets;
