@@ -21,9 +21,9 @@ html
               p= 'You are logged in as ' + user.name + ' ' + user.surname
               a(href="/users/logout")
                 p(class="btn btn-warning")= 'Log out'
-              //- form(action="/user/" + user.id method="POST")
-              //-   input(type="hidden" name="_method" value="DELETE")
-              //-   button(type="submit" class="btn btn-danger") Delete account
+              form(action="/users/" + user.id method="POST")
+                input(type="hidden" name="_method" value="DELETE")
+                button(type="submit" class="btn btn-danger") Delete account
 
 
     // content
