@@ -60,7 +60,7 @@ router.get('/logout', (req, res) => {
 router.delete('/:id', (req, res) => {
   db.User.destroy({
     where: {
-      id: req.body.id
+      id: req.params.id
     }
   }).then(() => {
     res.redirect('/');
